@@ -429,19 +429,48 @@ const CareerMentorsComponent = () => {
   }, [animationState, companies, getLogoPosition]);
 
   return (
-    <BackgroundBeamsWithCollision className="min-h-[520px] md:min-h-screen relative overflow-visible md:overflow-hidden">
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-4 sm:py-8 md:py-16 min-h-[520px] md:min-h-[80vh] flex flex-col justify-center">
+    <div className="relative w-full min-h-[600px] md:min-h-[700px] lg:min-h-[800px] overflow-hidden">
+       {/* Exact Wave Background from Image */}
+       <div 
+        className="absolute inset-0 bg-gradient-to-r from-[#3e82b0] via-[#56a5dd] to-[#8dacbb]"
+      >
+        
+        {/* Top Left Circle SVG */}
+        <svg
+  className="absolute top-0 left-0 w-full"
+  viewBox="0 0 1800 300"
+  preserveAspectRatio="none"
+  style={{ height: '25%' }}
+>
+  <circle cx="0" cy="0" r="300" fill="#ffffff" opacity="0.9"/>
+</svg>
+
+        {/* Bottom cream wave - SMOOTH TRANSITION from center to right */}
+        <svg
+          className="absolute bottom-0 left-0 w-full"
+          viewBox="0 0 1440 800"
+          preserveAspectRatio="none"
+          style={{ height: '58%' }}
+        >
+          <path
+            d="M0,900 L300,900 Q500,750 700,550 Q900,400 1100,480 Q1300,560 1440,450 L1440,900 Z"
+            fill="#ffffff"
+          />
+        </svg>
+        </div>
+
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-4 sm:py-8 md:py-16 min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex flex-col justify-center">
         
         {/* Mobile Layout */}
         {isMobile && (
-          <div className="space-y-3 sm:space-y-4 md:space-y-6 pt-8 pb-8 overflow-visible">
-            {/* Main Heading - Mobile */}
+  <div className="space-y-6 sm:space-y-4 md:space-y-6 pt-12 pb-12 overflow-visible min-h-[600px]">
+ {/* Main Heading - Mobile */}
             <div className="text-center px-2 mt-8">
               <div className="relative inline-block">
                 <h1 className="text-2xl sm:text-3xl font-black leading-tight text-gray-800">
-                  <span className="text-gray-800">Secure your </span>
+                  <span className="text-white">Secure your </span>
                   <span className="text-blue-600">Dream Career </span>
-                  <span className="text-gray-700">with Live Classes</span>
+                  <span className="text-white">with Live Classes</span>
                 </h1>
                 
                 {/* Mobile accent line */}
@@ -450,7 +479,7 @@ const CareerMentorsComponent = () => {
                 </div>
               </div>
               
-              <p className="text-sm sm:text-base text-gray-600 leading-relaxed mt-0 mb-0">
+              <p className="text-sm sm:text-base text-black leading-relaxed mt-0 mb-0">
                 From <span className="font-bold text-blue-600">Industry Experts</span>
               </p>
             </div>
@@ -476,9 +505,9 @@ const CareerMentorsComponent = () => {
             <div className="text-center px-4 py-6 flex-shrink-0">
               <div className="relative inline-block">
                 <h1 className="text-2xl md:text-4xl font-black leading-tight text-gray-800">
-                  <span className="text-gray-800">Secure your </span>
+                  <span className="text-white">Secure your </span>
                   <span className="text-blue-600">Dream Career </span>
-                  <span className="text-gray-700">with Live Classes</span>
+                  <span className="text-white">with Live Classes</span>
                 </h1>
                 
                 {/* Tablet accent line */}
@@ -487,7 +516,7 @@ const CareerMentorsComponent = () => {
                 </div>
               </div>
               
-              <p className="text-base md:text-lg text-gray-600 leading-relaxed mt-4">
+              <p className="text-base md:text-lg text-gray-100 leading-relaxed mt-4">
                 From <span className="font-bold text-blue-600">Industry Experts</span>
               </p>
             </div>
@@ -543,13 +572,13 @@ const CareerMentorsComponent = () => {
               <div className="space-y-6">
                 <div className="relative">
                   <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-tight">
-                    <span className="block text-gray-800 mb-3 lg:mb-4">
+                    <span className="block text-white mb-3 lg:mb-4">
                       Secure your
                     </span>
                     <span className="block text-blue-600 bg-clip-text mb-3 lg:mb-4">
                       Dream Career
                     </span>
-                    <span className="block text-gray-700 text-3xl lg:text-4xl xl:text-5xl">
+                    <span className="block text-white text-3xl lg:text-4xl xl:text-5xl">
                       with Live Classes
                     </span>
                   </h1>
@@ -560,7 +589,7 @@ const CareerMentorsComponent = () => {
                   </div>
                 </div>
                 
-                <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
+                <p className="text-lg lg:text-xl text-gray-100 leading-relaxed">
                   From <span className="font-bold text-blue-600">Industry Experts</span>
                 </p>
               </div>
@@ -602,7 +631,7 @@ const CareerMentorsComponent = () => {
           </div>
         )}
       </div>
-    </BackgroundBeamsWithCollision>
+    </div>
   );
 };
 

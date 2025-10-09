@@ -267,12 +267,11 @@ export default function HomePage() {
           Professional SAP & IT Training Institute
         </h1>
         <HeaderCarousel />
-        <Marquee />
         <Chevron />
 
           <Suspense fallback={<Loading />}>
-          <Keypoints />
           <OurClients />
+          <Keypoints />
           <Courses />
           <PlacementSection />
           <AnimatedStatsSection />

@@ -154,11 +154,15 @@ const initialCourses = [
 ];
 
 const Courses = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [showPopupForm, setShowPopupForm] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [formData, setFormData] = useState(null);
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState(initialCourses.map(course => ({
+    ...course,
+    timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 }
+  })));
 
   // Form state
   const [name, setName] = useState("");
@@ -176,10 +180,16 @@ const Courses = () => {
 
   useEffect(() => {
     // Initialize courses with calculated start times
+    if (!courses || courses.length === 0) {
+      setIsLoading(false);
+      return;
+    }
+    
     const now = new Date();
     const currentDate = now.toISOString().split("T")[0]; // YYYY-MM-DD format
 
-    const initializedCourses = initialCourses.map((course) => {
+    const initializedCourses = courses.map((course) => {
+      if (!course) return null; // Skip if course is undefined
       // Calculate the start date based on startDays
       const startDate = new Date(now);
       startDate.setDate(startDate.getDate() + course.startDays);
@@ -209,17 +219,17 @@ const Courses = () => {
       return {
         ...course,
         startTimestamp,
-        count: adjustedCount,
         timeLeft: {
-          days: diffDays,
-          hours: diffHours,
-          minutes: diffMinutes,
-          seconds: diffSeconds,
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
         },
       };
     });
 
     setCourses(initializedCourses);
+    setIsLoading(false);
 
     // Start timers for each course
     initializedCourses.forEach((course, index) => {
@@ -499,6 +509,14 @@ const Courses = () => {
           : `${selectedCountry.minLength}-${selectedCountry.maxLength}`
       } digits`
     : "Enter phone number";
+
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
 
   return (
     <div id="popCourses" className={`${styles.coursesContainer} text-center`}>

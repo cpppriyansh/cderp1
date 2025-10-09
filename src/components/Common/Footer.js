@@ -138,13 +138,13 @@ const Footer = () => {
       <div className="px-10 lg:px-24 flex flex-col">
         {/* Top Section with Logo and Social Icons */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-2.5 border-b border-white/10 pb-2.5 gap-5 md:gap-0">
-          <div className="w-[180px] h-auto">
+          <div className="w-[250px] h-auto">
             <Link href="/">
               <Image
                 src="/Footer/cdots.avif"
                 alt="Connecting Dots ERP logo"
-                width={150}
-                height={50}
+                width={250}
+                height={80}
                 loading="lazy"
               />
             </Link>
