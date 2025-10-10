@@ -1,9 +1,8 @@
-// components/HomePage/Branches.js (UPDATED FILE)
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic"; // Import dynamic for conditional loading
+import dynamic from "next/dynamic";
 import {
   MapPin,
   Navigation,
@@ -11,14 +10,12 @@ import {
   Clock,
   ChevronLeft,
   ChevronRight,
-  ArrowUpRight,
   Building,
   Map,
 } from "lucide-react";
 
-// Dynamically import BranchesMapView only when needed
 const BranchesMapView = dynamic(() => import("./BranchesMapView"), {
-  ssr: false, // This component requires client-side environment for Google Maps
+  ssr: false,
   loading: () => (
     <div className="flex justify-center items-center h-[320px] md:h-[390px] w-full">
       <div className="bg-white bg-opacity-10 p-6 rounded-xl shadow-lg backdrop-blur-sm">
@@ -32,9 +29,7 @@ const BranchesMapView = dynamic(() => import("./BranchesMapView"), {
             </div>
           </div>
         </div>
-        <p className="text-center mt-3 text-white font-medium">
-          Loading Map..
-        </p>
+        <p className="text-center mt-3 text-white font-medium">Loading Map..</p>
       </div>
     </div>
   ),
@@ -50,7 +45,7 @@ const branches = [
       "1st Floor,101, Police, Wireless Colony, Vishal Nagar, Pimple Nilakh, Pune, Pimpri-Chinchwad, Maharashtra 411027",
     position: { lat: 18.588048051275003, lng: 73.78119014757031 },
     mapLink: "https://maps.app.goo.gl/DNwzKa2Yt1WB6zUB7",
-    color: "#3b82f6", // Blue
+    color: "#3b82f6",
     image: "/branches/Pune-Cover-Photo.png",
   },
   {
@@ -62,7 +57,7 @@ const branches = [
       "4th Floor, Ram Niwas, B-404, Gokhale Rd, near McDonald's, Dada Patil Wadi, Naupada, Thane West, Thane, Maharashtra 400602",
     position: { lat: 19.259055941077712, lng: 72.96564544031934 },
     mapLink: "https://maps.app.goo.gl/i7W3baVVS1mDLmTJ9",
-    color: "#10b981", // Green
+    color: "#10b981",
     image: "/branches/Mumbai-Cover-Photo.png",
   },
   {
@@ -73,7 +68,7 @@ const branches = [
     address: "New Panchsheel Nagar, Civil Lines, Raipur, Chhattisgarh 492001",
     position: { lat: 21.23944689267376, lng: 81.65363342070017 },
     mapLink: "https://maps.app.goo.gl/1KA1uhcyoF5Tu4Mg6",
-    color: "#f97316", // Orange
+    color: "#f97316",
     image: "/branches/Raipur-Cover-Photo.png",
   },
 ];
@@ -81,27 +76,8 @@ const branches = [
 const BranchesComponent = () => {
   const [selectedBranch, setSelectedBranch] = useState(0);
   const [animationDirection, setAnimationDirection] = useState(null);
-  const [activeView, setActiveView] = useState("cards"); // Default to "cards" for performance
-  const [windowSize, setWindowSize] = useState({
-    width: typeof window !== "undefined" ? window.innerWidth : 1200,
-    height: typeof window !== "undefined" ? window.innerHeight : 800,
-  });
+  const [activeView, setActiveView] = useState("cards");
 
-  // Handle window resize
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const handleResize = () => {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      };
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, []);
-
-  // Animate branch change
   const changeBranch = (index, direction) => {
     setAnimationDirection(direction);
     setTimeout(() => {
@@ -110,25 +86,46 @@ const BranchesComponent = () => {
     }, 300);
   };
 
-  // Get next branch index
-  const getNextBranch = () => {
-    return (selectedBranch + 1) % branches.length;
-  };
+  const InfoRow = ({ icon: Icon, label, children, color }) => (
+    <div className="flex items-start">
+      <div
+        className="w-6 h-6 rounded-full flex items-center justify-center mr-2"
+        style={{ backgroundColor: `${color}15` }}
+      >
+        <Icon size={12} color={color} />
+      </div>
+      <div>
+        <p className="text-xs font-medium text-gray-500 mb-0.5">{label}</p>
+        {children}
+      </div>
+    </div>
+  );
 
-  // Get previous branch index
-  const getPrevBranch = () => {
-    return (selectedBranch - 1 + branches.length) % branches.length;
-  };
-
-  // No need for mapLoaded state here, it's handled by BranchesMapView
+  const BranchIndicator = ({ index, mobile = false }) => (
+    <button
+      onClick={() =>
+        changeBranch(index, index > selectedBranch ? "right" : "left")
+      }
+      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+        selectedBranch === index
+          ? mobile
+            ? "scale-125"
+            : "scale-150"
+          : "bg-gray-300"
+      }`}
+      style={{
+        backgroundColor:
+          selectedBranch === index ? branches[index].color : undefined,
+      }}
+      aria-label={`Select ${branches[index].city} branch`}
+    />
+  );
 
   return (
     <div className="py-4 mb-8 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header Section - compact version */}
         <div className="text-center mb-8">
           <h2 className="branchesTitle mb-4">Find Us Across India</h2>
-          {/* View Toggle - more compact */}
           <div className="flex justify-center mt-4 mb-6">
             <div className="bg-white rounded-full p-1 shadow-md inline-flex">
               <button
@@ -157,10 +154,8 @@ const BranchesComponent = () => {
           </div>
         </div>
 
-        {/* Map View - CONDITIONAL RENDERING OF NEW COMPONENT */}
         {activeView === "map" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
-            {/* Map Container will be inside BranchesMapView */}
             <div className="lg:col-span-8 h-[320px] md:h-[390px] relative overflow-hidden rounded-xl shadow-lg border border-gray-200">
               <BranchesMapView
                 branches={branches}
@@ -169,10 +164,9 @@ const BranchesComponent = () => {
               />
             </div>
 
-            {/* Branch Info Card - more compact */}
             <div className="lg:col-span-4">
               <div
-                className={`bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 h-full relative transition-all duration-300 transform ${
+                className={`bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 h-full transition-all duration-300 ${
                   animationDirection === "left"
                     ? "-translate-x-full opacity-0"
                     : animationDirection === "right"
@@ -180,7 +174,6 @@ const BranchesComponent = () => {
                       : "translate-x-0"
                 }`}
               >
-                {/* Branch Image - shorter */}
                 <div className="h-32 relative overflow-hidden">
                   <Image
                     src={branches[selectedBranch].image}
@@ -188,16 +181,16 @@ const BranchesComponent = () => {
                     layout="fill"
                     objectFit="cover"
                     className="transition-transform duration-700 hover:scale-110"
-                    // Add sizes for better optimization
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    loading="eager" // If this image is part of the initial view, ensure it's eagerly loaded
+                    loading="eager"
                   />
                   <div
                     className="absolute inset-0"
                     style={{
-                      background: `linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)`,
+                      background:
+                        "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)",
                     }}
-                  ></div>
+                  />
                   <div className="absolute bottom-3 left-3 text-white">
                     <h3 className="text-xl font-bold">
                       {branches[selectedBranch].city}
@@ -215,77 +208,40 @@ const BranchesComponent = () => {
                   </div>
                 </div>
 
-                {/* Branch Details - more compact */}
                 <div className="p-4">
                   <div className="flex flex-col gap-3 mb-4">
-                    <div className="flex items-start">
-                      <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center mr-2"
-                        style={{
-                          backgroundColor: `${branches[selectedBranch].color}15`,
-                        }}
+                    <InfoRow
+                      icon={MapPin}
+                      label="ADDRESS"
+                      color={branches[selectedBranch].color}
+                    >
+                      <p className="text-xs text-gray-700">
+                        {branches[selectedBranch].address}
+                      </p>
+                    </InfoRow>
+                    <InfoRow
+                      icon={Phone}
+                      label="PHONE"
+                      color={branches[selectedBranch].color}
+                    >
+                      <a
+                        href={`tel:${branches[selectedBranch].phone}`}
+                        className="text-xs text-gray-700 no-underline hover:underline"
                       >
-                        <MapPin
-                          size={12}
-                          color={branches[selectedBranch].color}
-                        />
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-gray-500 mb-0.5">
-                          ADDRESS
-                        </p>
-                        <p className="text-xs text-gray-700">
-                          {branches[selectedBranch].address}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center mr-2"
-                        style={{
-                          backgroundColor: `${branches[selectedBranch].color}15`,
-                        }}
-                      >
-                        <Phone
-                          size={12}
-                          color={branches[selectedBranch].color}
-                        />
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-gray-500 mb-0.5">
-                          PHONE
-                        </p>
-                        <a
-                          href={`tel:${branches[selectedBranch].phone}`}
-                          className="text-xs text-gray-700 no-underline hover:underline"
-                        >
-                          {branches[selectedBranch].phone}
-                        </a>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center mr-2"
-                        style={{
-                          backgroundColor: `${branches[selectedBranch].color}15`,
-                        }}
-                      >
-                        <Clock
-                          size={12}
-                          color={branches[selectedBranch].color}
-                        />
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-gray-500 mb-0.5">
-                          WORKING HOURS
-                        </p>
-                        <p className="text-xs text-gray-700">
-                          {branches[selectedBranch].hours}
-                        </p>
-                      </div>
-                    </div>
+                        {branches[selectedBranch].phone}
+                      </a>
+                    </InfoRow>
+                    <InfoRow
+                      icon={Clock}
+                      label="WORKING HOURS"
+                      color={branches[selectedBranch].color}
+                    >
+                      <p className="text-xs text-gray-700">
+                        {branches[selectedBranch].hours}
+                      </p>
+                    </InfoRow>
                   </div>
-                  {/* Action Buttons */}
+
                   <div className="grid grid-cols-2 gap-2">
                     <a
                       href={branches[selectedBranch].mapLink}
@@ -307,39 +263,31 @@ const BranchesComponent = () => {
                   </div>
                 </div>
 
-                {/* Navigation Controls */}
                 <div className="flex justify-between p-3 border-t border-gray-100">
                   <button
-                    onClick={() => changeBranch(getPrevBranch(), "left")}
+                    onClick={() =>
+                      changeBranch(
+                        (selectedBranch - 1 + branches.length) %
+                          branches.length,
+                        "left"
+                      )
+                    }
                     className="flex items-center text-gray-600 hover:text-gray-900 text-xs font-medium transition"
                   >
                     <ChevronLeft size={16} className="mr-1" /> Previous
                   </button>
                   <div className="flex space-x-1">
-                    {branches.map((branch, index) => (
-                      <button
-                        key={`quick-jump-${index}`}
-                        onClick={() =>
-                          changeBranch(
-                            index,
-                            index > selectedBranch ? "right" : "left"
-                          )
-                        }
-                        className={`w-2 h-2 rounded-full transition-all duration-300`}
-                        style={{
-                          backgroundColor:
-                            selectedBranch === index ? branch.color : "#d1d5db",
-                          transform:
-                            selectedBranch === index
-                              ? "scale(1.5)"
-                              : "scale(1)",
-                        }}
-                        aria-label={`Jump to ${branch.city}`}
-                      />
+                    {branches.map((_, index) => (
+                      <BranchIndicator key={index} index={index} />
                     ))}
                   </div>
                   <button
-                    onClick={() => changeBranch(getNextBranch(), "right")}
+                    onClick={() =>
+                      changeBranch(
+                        (selectedBranch + 1) % branches.length,
+                        "right"
+                      )
+                    }
                     className="flex items-center text-gray-600 hover:text-gray-900 text-xs font-medium transition"
                   >
                     Next <ChevronRight size={16} className="ml-1" />
@@ -350,7 +298,6 @@ const BranchesComponent = () => {
           </div>
         )}
 
-        {/* Card View - more compact with reduced heights */}
         {activeView === "cards" && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {branches.map((branch, index) => (
@@ -358,21 +305,16 @@ const BranchesComponent = () => {
                 key={index}
                 className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-200 group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
               >
-                {/* Card Image with Map Preview - shorter */}
                 <div className="h-36 relative overflow-hidden">
-                  {/* Since map preview for cards is not crucial, we can consider replacing this with a static image if performance is still an issue */}
-                  {/* For now, keeping as is, but it's rendering a map for each card on initial load */}
-                  {/* If the map previews are also causing issues, we might need a separate component for them and dynamically load only if needed */}
                   <Image
-                    src={branch.image} // Use static image for card preview initially
+                    src={branch.image}
                     alt={`${branch.city} Office Preview`}
                     layout="fill"
                     objectFit="cover"
                     className="transition-transform duration-700 hover:scale-110"
-                    loading="lazy" // Lazy load all card images
+                    loading="lazy"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                  {/* Overlay and Title */}
                   <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 to-transparent p-3 group-hover:from-black/90 transition-all duration-300">
                     <div
                       className="inline-block px-2 py-0.5 rounded-full text-white text-xs font-semibold self-start mb-1"
@@ -384,7 +326,6 @@ const BranchesComponent = () => {
                       {branch.city}
                     </h3>
                   </div>
-                  {/* View Full Map Button - appears on hover */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20">
                     <button
                       className="bg-white text-gray-800 hover:bg-gray-100 font-medium px-3 py-1 rounded-lg shadow-md flex items-center text-xs"
@@ -399,7 +340,6 @@ const BranchesComponent = () => {
                   </div>
                 </div>
 
-                {/* Card Content - more compact */}
                 <div className="p-4">
                   <div className="space-y-2 mb-4">
                     <div className="flex items-start">
@@ -420,7 +360,6 @@ const BranchesComponent = () => {
                       <p className="text-gray-700 text-xs">{branch.hours}</p>
                     </div>
                   </div>
-                  {/* Action Button */}
                   <a
                     href={branch.mapLink}
                     target="_blank"
@@ -428,8 +367,7 @@ const BranchesComponent = () => {
                     className="flex items-center justify-center w-full text-white font-medium py-2 px-3 rounded-lg text-xs transition-all duration-300 hover:scale-105 no-underline"
                     style={{ backgroundColor: branch.color }}
                   >
-                    <Navigation size={14} className="mr-1" /> Get Directions{" "}
-                    <ArrowUpRight size={14} className="ml-1" />
+                    <Navigation size={14} className="mr-1" /> Get Directions →
                   </a>
                 </div>
               </div>
@@ -437,29 +375,15 @@ const BranchesComponent = () => {
           </div>
         )}
 
-        {/* Branch Indicator Pills - Mobile Only */}
         <div className="lg:hidden flex justify-center mt-6">
           <div className="flex gap-2">
-            {branches.map((branch, index) => (
-              <button
-                key={`indicator-${index}`}
-                onClick={() =>
-                  changeBranch(index, index > selectedBranch ? "right" : "left")
-                }
-                className={`w-2 h-2 rounded-full transition-all duration-300 transform ${
-                  selectedBranch === index ? "scale-125" : "bg-gray-300"
-                }`}
-                style={{
-                  backgroundColor:
-                    selectedBranch === index ? branch.color : undefined,
-                }}
-                aria-label={`Select ${branch.city} branch`}
-              />
+            {branches.map((_, index) => (
+              <BranchIndicator key={index} index={index} mobile />
             ))}
           </div>
         </div>
       </div>
-      {/* Custom CSS for the title styling */}
+
       <style jsx global>{`
         .branchesTitle {
           font-size: 2.5rem;

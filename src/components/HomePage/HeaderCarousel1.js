@@ -13,24 +13,23 @@ const CareerHeroSlide = ({ onOpenForm }) => {
   };
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden">
+    <div className="relative w-full min-h-screen">
       
-      {/* Exact Wave Background from Image */}
-      <div 
-        className="absolute inset-0 bg-gradient-to-r from-[#3e82b0] via-[#56a5dd] to-[#8dacbb]"
-      >
+      {/* Wave Background */}
+      <div className="absolute inset-0 bg-[#182E4A]">
+      <svg
+          className="absolute bottom-50 left-0 w-full"
+          viewBox="0 0 1440 800"
+          preserveAspectRatio="none"
+          style={{ height: '58%', rotate: '180deg' }}
+        >
+          <path
+            d="M0,900 L300,900 Q500,750 700,550 Q900,400 1100,480 Q1300,560 1440,450 L1440,900 Z"
+            fill="#ffffff"
+          />
+        </svg>
         
-        {/* Top Left Circle SVG */}
-        <svg
-  className="absolute top-0 left-0 w-full"
-  viewBox="0 0 1800 300"
-  preserveAspectRatio="none"
-  style={{ height: '25%' }}
->
-  <circle cx="0" cy="0" r="300" fill="#ffffff" opacity="0.9"/>
-</svg>
-
-        {/* Bottom cream wave - SMOOTH TRANSITION from center to right */}
+        {/* Bottom cream wave */}
         <svg
           className="absolute bottom-0 left-0 w-full"
           viewBox="0 0 1440 800"
@@ -56,7 +55,7 @@ const CareerHeroSlide = ({ onOpenForm }) => {
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white">
                 <span className="block sm:inline">
                   Unlock your{" "}
-                  <span className="text-[#182E4A] relative inline-block">
+                  <span className="text-[#93C5FD] relative inline-block">
                     Career
                     <span className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-0.5 sm:h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transform scale-x-0 animate-[scaleX_1s_ease-out_0.5s_forwards]"></span>
                   </span>
@@ -68,7 +67,7 @@ const CareerHeroSlide = ({ onOpenForm }) => {
                 <span className="text-gray-100 font-normal text-sm sm:text-base md:text-lg lg:text-xl">No.1 Training & Placement Center</span>
               </div>
 
-              <p className="text-gray-100 text-sm sm:text-base lg:text-lg leading-relaxed max-w-full sm:max-w-lg text-justify">
+              <p className="text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed max-w-full sm:max-w-lg text-justify">
                 For more than 10 years, we&apos;ve been passionate about providing engaging, 
                 instructor-led training that helps professionals around the world grow and succeed.
               </p>
@@ -87,7 +86,6 @@ const CareerHeroSlide = ({ onOpenForm }) => {
                   <span className="relative z-10">Free Consultation</span>
                 </button>
               </div>
-
 
             </div>
 

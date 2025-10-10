@@ -2,8 +2,47 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "@/styles/HomePage/FeedbackandReviews.module.css";
+
+// Extract ReviewCard as a separate component to eliminate duplication
+const ReviewCard = ({ review }) => {
+  // Simplified star rendering with Array.from
+  const renderStars = (rating) => 
+    Array.from({ length: 5 }, (_, i) => (
+      <span
+        key={i}
+        className={i < rating ? styles.starFilled : styles.starEmpty}
+      >
+        ★
+      </span>
+    ));
+
+  return (
+    <div className={styles.reviewCard}>
+      <div className={styles.reviewCardInner}>
+        <div className={styles.imageContainer}>
+          <Image
+            src={review.image}
+            alt={`${review.name}'s photo`}
+            width={120}
+            height={120}
+            className={styles.reviewImage}
+          />
+          <div className={styles.studentBadge}>Verified Student</div>
+          <div className={styles.imageBorder}></div>
+        </div>
+        <div className={styles.reviewContent}>
+          <h4 className={styles.reviewName}>{review.name}</h4>
+          <div className={styles.starRating}>
+            {renderStars(review.rating)}
+          </div>
+          <p className={styles.reviewText}>"{review.review}"</p>
+        </div>
+        <div className={styles.quoteIcon}>"</div>
+      </div>
+    </div>
+  );
+};
 
 const FeedbackAndReviews = () => {
   const reviews = [
@@ -54,15 +93,6 @@ const FeedbackAndReviews = () => {
   const marqueeRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Handle mouse events for pausing the marquee
-  const handleMouseEnter = () => {
-    setIsPaused(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsPaused(false);
-  };
-
   useEffect(() => {
     const marquee = marqueeRef.current;
     if (marquee) {
@@ -70,27 +100,14 @@ const FeedbackAndReviews = () => {
     }
   }, [isPaused]);
 
-  // Render stars based on rating
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      stars.push(
-        <span
-          key={i}
-          className={i < rating ? styles.starFilled : styles.starEmpty}
-        >
-          ★
-        </span>
-      );
-    }
-    return stars;
-  };
+  // Double the reviews array once for infinite scroll
+  const doubledReviews = [...reviews, ...reviews];
 
   return (
     <section className={styles.feedbackSection}>
-      <div className="container">
-        <div className="row justify-content-center mb-5">
-          <div className="col-lg-8 text-center">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex justify-center mb-12">
+          <div className="max-w-3xl text-center">
             <h2 className={styles.sectionTitle}>What Our Students Say</h2>
             <div className={styles.titleUnderline}></div>
             <p className={styles.sectionSubtitle}>
@@ -104,62 +121,11 @@ const FeedbackAndReviews = () => {
           <div
             className={styles.marquee}
             ref={marqueeRef}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
-            {reviews.map((review, index) => (
-              <div className={styles.reviewCard} key={index}>
-                <div className={styles.reviewCardInner}>
-                  <div className={styles.imageContainer}>
-                    <Image
-                      src={review.image}
-                      alt={`${review.name}'s photo`}
-                      width={120}
-                      height={120}
-                      className={styles.reviewImage}
-                    />
-                    <div className={styles.studentBadge}>Verified Student</div>
-
-                    <div className={styles.imageBorder}></div>
-                  </div>
-                  <div className={styles.reviewContent}>
-                    <h4 className={styles.reviewName}>{review.name}</h4>
-                    <div className={styles.starRating}>
-                      {renderStars(review.rating)}
-                    </div>
-                    <p className={styles.reviewText}>"{review.review}"</p>
-                  </div>
-                  <div className={styles.quoteIcon}>"</div>
-                </div>
-              </div>
-            ))}
-
-            {/* Duplicate reviews for seamless infinite loop */}
-            {reviews.map((review, index) => (
-              <div className={styles.reviewCard} key={`duplicate-${index}`}>
-                <div className={styles.reviewCardInner}>
-                  <div className={styles.imageContainer}>
-                    <Image
-                      src={review.image}
-                      alt={`${review.name}'s photo`}
-                      width={120}
-                      height={120}
-                      className={styles.reviewImage}
-                    />
-                    <div className={styles.studentBadge}>Verified Student</div>
-
-                    <div className={styles.imageBorder}></div>
-                  </div>
-                  <div className={styles.reviewContent}>
-                    <h4 className={styles.reviewName}>{review.name}</h4>
-                    <div className={styles.starRating}>
-                      {renderStars(review.rating)}
-                    </div>
-                    <p className={styles.reviewText}>"{review.review}"</p>
-                  </div>
-                  <div className={styles.quoteIcon}>"</div>
-                </div>
-              </div>
+            {doubledReviews.map((review, index) => (
+              <ReviewCard key={index} review={review} />
             ))}
           </div>
         </div>

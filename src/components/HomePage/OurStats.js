@@ -3,15 +3,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Trophy, GraduationCap, Target, Users, Code, Handshake } from 'lucide-react';
 import styles from '@/styles/HomePage/OurStats.module.css';
 
-
 const AnimatedStatsSection = () => {
   const [currentStat, setCurrentStat] = useState(-1);
   const [waveProgress, setWaveProgress] = useState(0);
   const [dotPosition, setDotPosition] = useState({ x: 0, y: 180 });
-  const [clickedStat, setClickedStat] = useState(-1);
-  const [pathLength, setPathLength] = useState(1500);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
   const [showAllCards, setShowAllCards] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [inView, setInView] = useState(false);
@@ -21,43 +16,32 @@ const AnimatedStatsSection = () => {
     typeof window !== 'undefined' ? window.innerWidth : 0
   );
 
-
   const pathRef = useRef(null);
   const containerRef = useRef(null);
   const frameRef = useRef(null);
 
-
-  // Helper function to toggle tablet card expansion
   const toggleExpandTablet = (idx) => {
     setExpandedTablet((prev) => ({ ...prev, [idx]: !prev[idx] }));
   };
 
-
-  // Helper function to toggle mobile card expansion
   const toggleExpandMobile = (idx) => {
     setExpandedMobile((prev) => ({ ...prev, [idx]: !prev[idx] }));
   };
 
-
-  // Responsive checks for isMobile and isTablet
   useEffect(() => {
     const checkScreen = () => {
-      const width = window.innerWidth;
-      setWindowWidth(width);
-      setIsMobile(width < 1024);
-      setIsTablet(width >= 1024 && width <= 1200);
+      setWindowWidth(window.innerWidth);
     };
     checkScreen();
     window.addEventListener('resize', checkScreen);
     return () => window.removeEventListener('resize', checkScreen);
   }, []);
 
-
-  // Determine if animation should be disabled based on width range 455px to 1023px inclusive
+  const isMobile = windowWidth < 1024;
+  const isTablet = windowWidth >= 1024 && windowWidth <= 1200;
   const disableAnimation = windowWidth >= 0 && windowWidth <= 1023;
+  const pathLength = 1500;
 
-
-  // Control showAllCards based on disableAnimation flag
   useEffect(() => {
     if (disableAnimation) {
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
@@ -69,7 +53,6 @@ const AnimatedStatsSection = () => {
       setShowAllCards(false);
     }
   }, [disableAnimation]);
-
 
   const stats = [
     {
@@ -152,8 +135,6 @@ const AnimatedStatsSection = () => {
     },
   ];
 
-
-  // Viewport observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -161,31 +142,28 @@ const AnimatedStatsSection = () => {
       },
       { threshold: 0.2 }
     );
-    if (containerRef.current) observer.observe(containerRef.current);
-    return () => observer.disconnect();
+    const currentContainer = containerRef.current;
+    if (currentContainer) observer.observe(currentContainer);
+    return () => {
+      if (currentContainer) observer.unobserve(currentContainer);
+    };
   }, []);
 
-
-  // Animation effect - skip animation if disabled
   useEffect(() => {
     if (!inView || disableAnimation) {
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
       return;
     }
 
-
     const animationDuration = isMobile ? 10000 : 8000;
     let startTime = Date.now();
-
 
     const animate = () => {
       if (!inView) return;
 
-
       const now = Date.now();
       const elapsed = (now - startTime) % animationDuration;
       const progress = elapsed / animationDuration;
-
 
       if (isMobile) {
         if (isPaused) {
@@ -193,17 +171,14 @@ const AnimatedStatsSection = () => {
           return;
         }
 
-
         const yProgress = progress * 100;
         setWaveProgress(yProgress);
         setDotPosition({ x: 0, y: yProgress });
         setCurrentStat(getDotProximityToCircle(yProgress));
 
-
         if (elapsed >= animationDuration - 16) {
           setIsPaused(true);
           setShowAllCards(true);
-          // Show all cards for 15 seconds in mobile view before continuing animation
           setTimeout(() => {
             setIsPaused(false);
             setShowAllCards(false);
@@ -220,11 +195,9 @@ const AnimatedStatsSection = () => {
         setDotPosition(getPointOnCurve(wavePos));
         setCurrentStat(getDotProximityToCircle(wavePos));
 
-
         if (elapsed >= animationDuration - 16) {
           setIsPaused(true);
           setShowAllCards(true);
-          // Show all cards for 15 seconds in mobile view before continuing animation
           setTimeout(() => {
             setIsPaused(false);
             setShowAllCards(false);
@@ -233,19 +206,16 @@ const AnimatedStatsSection = () => {
         }
       }
 
-
       frameRef.current = requestAnimationFrame(animate);
     };
 
-
     frameRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frameRef.current);
+    return () => {
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    };
   }, [inView, isPaused, isMobile, disableAnimation]);
 
-
-  // Determine if all cards should be shown
   const cardsAlwaysVisible = disableAnimation || showAllCards;
-
 
   return (
     <div ref={containerRef} className="w-full">
@@ -269,14 +239,11 @@ const AnimatedStatsSection = () => {
             <p className={styles.subtitle}>Milestones that define our journey and success</p>
           </div>
 
-
-          {/* Desktop/Tablet with wave */}
           {!isMobile && (
             <div
               className="relative w-full max-w-7xl -mt-20"
               style={{ height: isTablet ? '460px' : '520px' }}
             >
-              {/* Wave path */}
               <div className="absolute inset-0" style={{ top: '60px', height: isTablet ? '200px' : '240px' }}>
                 <svg className="w-full h-full" viewBox="0 0 1500 300" preserveAspectRatio="none">
                   <defs>
@@ -297,19 +264,14 @@ const AnimatedStatsSection = () => {
                 </svg>
               </div>
 
-
-              {/* Circles + Cards */}
               {stats.map((stat, index) => {
                 const IconComponent = stat.icon;
                 const point = getPointOnCurve(stat.position);
                 const isActive = currentStat === index;
-                const isClicked = clickedStat === index;
-                const showCard = cardsAlwaysVisible || isActive || isClicked;
+                const showCard = cardsAlwaysVisible || isActive;
                 const isTabletExpanded = expandedTablet[index];
 
-
                 const circleSize = isTablet ? 'w-20 h-20' : 'w-28 h-28';
-
 
                 return (
                   <div
@@ -325,14 +287,13 @@ const AnimatedStatsSection = () => {
                       className={`
                         ${circleSize} rounded-full flex flex-col items-center justify-center
                         bg-gradient-to-br ${stat.color} shadow-lg text-white text-center
-                        ${isActive ? 'scale-110 ring-4 ring-blue-300' : isClicked ? 'scale-105 ring-4 ring-yellow-400' : ''}
+                        ${isActive ? 'scale-110 ring-4 ring-blue-300' : ''}
                       `}
                     >
                       <span className={`font-bold ${isTablet ? 'text-sm' : 'text-lg'}`}>{stat.value}</span>
                       <span className={`font-medium ${isTablet ? 'text-[10px]' : 'text-xs'}`}>{stat.title}</span>
                       <IconComponent className={`mt-1 text-white/80 ${isTablet ? 'w-3 h-3' : 'w-5 h-5'}`} />
                     </div>
-
 
                     {showCard && (
                       <div
@@ -361,13 +322,11 @@ const AnimatedStatsSection = () => {
                             {stat.title}
                           </p>
 
-
                           {isTablet ? (
                             <>
                               <p className={`mt-2 text-gray-600 text-center text-xs`}>
                                 {isTabletExpanded ? stat.detailedInfo : stat.shortDesc}
                               </p>
-
 
                               <div className="text-center mt-2">
                                 <button
@@ -382,7 +341,6 @@ const AnimatedStatsSection = () => {
                                   {isTabletExpanded ? 'View less' : 'View more'}
                                 </button>
                               </div>
-
 
                               <p
                                 className={`mt-2 font-bold text-center text-[10px]`}
@@ -409,8 +367,6 @@ const AnimatedStatsSection = () => {
                 );
               })}
 
-
-              {/* Dot - hide if cards always visible */}
               {!cardsAlwaysVisible && (
                 <div
                   className={`absolute rounded-full border-2 border-blue-600 transform -translate-x-1/2 -translate-y-1/2 ${
@@ -427,15 +383,10 @@ const AnimatedStatsSection = () => {
             </div>
           )}
 
-
-          {/* Mobile Layout - Smaller Cards */}
           {isMobile && (
             <div className="flex flex-row gap-3 mt-20 pt-10 pb-20 relative">
-              {/* Vertical line */}
               <div className="absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-300 to-blue-600 rounded-full"></div>
 
-
-              {/* Dot */}
               {!showAllCards && (
                 <div
                   className="absolute w-3 h-3 bg-blue-500 rounded-full border-2 border-blue-600 transform -translate-x-1/2 -translate-y-1/2 z-9"
@@ -445,32 +396,20 @@ const AnimatedStatsSection = () => {
                 </div>
               )}
 
-
-              {/* Circles + Smaller Cards */}
               <div className="flex flex-col gap-8 items-start relative z-10">
                 {stats.map((stat, index) => {
                   const IconComponent = stat.icon;
                   const isActive = currentStat === index;
-                  const isClicked = clickedStat === index;
-                  const showCard = showAllCards || isActive || isClicked;
+                  const showCard = showAllCards || isActive;
                   const isMobileExpanded = expandedMobile[index];
-
 
                   return (
                     <div key={stat.id} className="flex items-start gap-3 w-full">
-                      {/* Smaller Circle */}
                       <button
-                        onClick={() => {
-                          if (!showAllCards) {
-                            setClickedStat(clickedStat === index ? -1 : index);
-                            setCurrentStat(index);
-                          }
-                        }}
                         className={`
                           w-14 h-14 rounded-full flex flex-col items-center justify-center
                           bg-gradient-to-br ${stat.color} shadow-lg text-white text-center flex-shrink-0
                           ${isActive && !showAllCards ? 'scale-110 ring-4 ring-blue-300' : ''}
-                          ${isClicked && !showAllCards ? 'ring-4 ring-yellow-400' : ''}
                           ${showAllCards ? 'ring-2 ring-blue-200' : ''}
                           transition-all duration-200 ease-in-out
                         `}
@@ -480,8 +419,6 @@ const AnimatedStatsSection = () => {
                         <IconComponent className="w-2 h-2 mt-0.5 text-white/80" />
                       </button>
 
-
-                      {/* Smaller Card */}
                       {showCard && (
                         <div className="flex-1 max-w-xs">
                           <div
@@ -492,20 +429,15 @@ const AnimatedStatsSection = () => {
                             `}
                             style={{ borderLeftColor: stat.accentColor }}
                           >
-                            {/* Compact Header */}
                             <div className="flex items-start gap-2 w-full">
                               <IconComponent className="w-4 h-4 mt-0.5 text-black/80 flex-shrink-0" />
                               <p className="text-[12px] text-gray-600 font-semibold text-left">{stat.title}</p>
                             </div>
 
-
-                            {/* Compact Description */}
                             <p className="text-[10px] text-gray-700 leading-relaxed items-start text-left">
                               {stat.detailedInfo}
                             </p>
 
-
-                            {/* Small View More Button */}
                             <div className="text-center">
                               <button
                                 onClick={() => toggleExpandMobile(index)}
@@ -520,8 +452,6 @@ const AnimatedStatsSection = () => {
                               </button>
                             </div>
 
-
-                            {/* Expanded Content with smooth animation */}
                             <div
                               className={`border-t border-gray-200 pt-2 expandable-content ${
                                 isMobileExpanded ? 'expanded' : ''
@@ -530,7 +460,6 @@ const AnimatedStatsSection = () => {
                               <p className="text-[10px] text-gray-700 leading-relaxed mb-2 text-left">
                                 {stat.shortDesc}
                               </p>
-
 
                               <div className="bg-white/60 rounded p-1">
                                 <p className="text-[9px] font-semibold text-center" style={{ color: stat.accentColor }}>
@@ -553,8 +482,6 @@ const AnimatedStatsSection = () => {
   );
 };
 
-
-/* ---- Helper Functions ---- */
 function getPointOnCurve(progress) {
   const t = Math.max(0, Math.min(100, progress)) / 100;
   const segments = [
@@ -576,7 +503,6 @@ function getPointOnCurve(progress) {
   };
 }
 
-
 function getDotProximityToCircle(dotProgress) {
   const positions = [0, 20, 40, 60, 80, 100];
   for (let i = 0; i < positions.length; i++) {
@@ -584,6 +510,5 @@ function getDotProximityToCircle(dotProgress) {
   }
   return -1;
 }
-
 
 export default AnimatedStatsSection;

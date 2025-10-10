@@ -5,19 +5,16 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "@/styles/Common/Navbar.module.css";
-
-// Dynamic import for AnimatedLogo
 import dynamic from "next/dynamic";
+
 const AnimatedLogo = dynamic(() => import("../AnimatedLogo"), {
   ssr: false,
   loading: () => <div className={styles.animatedLogoPlaceholder} />,
 });
 
-// Custom component definitions
-const Navbar = ({ expand, className, children, ref }) => {
+const Navbar = ({ expand, className, children }) => {
   const pathname = usePathname();
   
-  // Hide navbar on blog admin pages
   if (
     pathname &&
     (pathname.startsWith('/blog-admin') ||
@@ -32,27 +29,20 @@ const Navbar = ({ expand, className, children, ref }) => {
   }
   
   return (
-  <nav
-    className={`${styles.navbar} ${
-      expand
-        ? styles[
-            `navbarExpand${expand.charAt(0).toUpperCase() + expand.slice(1)}`
-          ]
-        : ""
-    } ${className || ""}`}
-    ref={ref}
-  >
-    {children}
-  </nav>
+    <nav
+      className={`${styles.navbar} ${
+        expand
+          ? styles[`navbarExpand${expand.charAt(0).toUpperCase() + expand.slice(1)}`]
+          : ""
+      } ${className || ""}`}
+    >
+      {children}
+    </nav>
   );
 };
 
 const Container = ({ fluid, className, children }) => (
-  <div
-    className={`${fluid ? styles.containerFluid : styles.container} ${
-      className || ""
-    }`}
-  >
+  <div className={`${fluid ? styles.containerFluid : styles.container} ${className || ""}`}>
     {children}
   </div>
 );
@@ -62,11 +52,7 @@ const Nav = ({ className, children }) => (
 );
 
 const Button = ({ className, onClick, children, ...props }) => (
-  <button
-    className={`${styles.btn} ${className || ""}`}
-    onClick={onClick}
-    {...props}
-  >
+  <button className={`${styles.btn} ${className || ""}`} onClick={onClick} {...props}>
     {children}
   </button>
 );
@@ -83,17 +69,13 @@ const Header = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [mobileOpenDropdown, setMobileOpenDropdown] = useState(null);
   const [touchStartX, setTouchStartX] = useState(null);
-  const [touchMoveX, setTouchMoveX] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [floatingNav, setFloatingNav] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const pathname = usePathname();
   const router = useRouter();
   const sidebarRef = useRef(null);
-  const navbarRef = useRef(null);
 
-  // Set active link based on current pathname
   useEffect(() => {
     if (pathname) {
       if (pathname.includes("sap-course")) {
@@ -104,10 +86,7 @@ const Header = () => {
         setActiveLink("dropdown4");
       } else if (pathname.includes("digital-marketing")) {
         setActiveLink("dropdown5");
-      } else if (
-        pathname.includes("hr-training") ||
-        pathname.includes("hr-course")
-      ) {
+      } else if (pathname.includes("hr-training") || pathname.includes("hr-course")) {
         setActiveLink("dropdown6");
       } else if (pathname.includes("aboutus")) {
         setActiveLink("aboutus");
@@ -117,7 +96,6 @@ const Header = () => {
     }
   }, [pathname]);
 
-  // Enhanced scroll effect for smoother floating navbar transition
   useEffect(() => {
     let ticking = false;
     
@@ -125,21 +103,8 @@ const Header = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
           const scrollY = window.scrollY;
-          const isScrolled = scrollY > 50;
-          const shouldFloat = scrollY > 150;
-          
-          setScrolled(isScrolled);
-          
-          if (shouldFloat !== floatingNav) {
-            setIsTransitioning(true);
-            setFloatingNav(shouldFloat);
-            
-            // Reset transition state after animation completes
-            setTimeout(() => {
-              setIsTransitioning(false);
-            }, 600);
-          }
-          
+          setScrolled(scrollY > 50);
+          setFloatingNav(scrollY > 150);
           ticking = false;
         });
         ticking = true;
@@ -148,7 +113,7 @@ const Header = () => {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [floatingNav]);
+  }, []);
 
   const closeSidebar = useCallback(() => {
     setIsSidebarVisible(false);
@@ -160,7 +125,6 @@ const Header = () => {
     }
   }, []);
 
-  // Handle click outside sidebar to close it
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -175,9 +139,7 @@ const Header = () => {
 
     if (isSidebarVisible) {
       document.addEventListener("mousedown", handleClickOutside);
-      document.addEventListener("touchstart", handleClickOutside, {
-        passive: true,
-      });
+      document.addEventListener("touchstart", handleClickOutside, { passive: true });
     }
 
     return () => {
@@ -186,7 +148,6 @@ const Header = () => {
     };
   }, [isSidebarVisible, closeSidebar]);
 
-  // Add effect to handle window resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 992 && isSidebarVisible) {
@@ -198,19 +159,13 @@ const Header = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isSidebarVisible, closeSidebar]);
 
-  // Add effect to manage overlay and body scroll
   useEffect(() => {
-    if (isSidebarVisible) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = isSidebarVisible ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [isSidebarVisible]);
 
-  // Add keyboard navigation support
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape" && isSidebarVisible) {
@@ -245,9 +200,7 @@ const Header = () => {
   const handleMobileDropdownToggle = useCallback(
     (dropdown) => {
       if (window.innerWidth < 992) {
-        setMobileOpenDropdown(
-          mobileOpenDropdown === dropdown ? null : dropdown
-        );
+        setMobileOpenDropdown(mobileOpenDropdown === dropdown ? null : dropdown);
       }
     },
     [mobileOpenDropdown]
@@ -260,18 +213,14 @@ const Header = () => {
         router.push(linkBasePath).then(() => {
           if (section) {
             setTimeout(() => {
-              document
-                .getElementById(section)
-                ?.scrollIntoView({ behavior: "smooth", block: "start" });
+              document.getElementById(section)?.scrollIntoView({ behavior: "smooth", block: "start" });
             }, 100);
           }
           closeSidebar();
         });
       } else {
         if (section) {
-          document
-            .getElementById(section)
-            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+          document.getElementById(section)?.scrollIntoView({ behavior: "smooth", block: "start" });
         }
         closeSidebar();
       }
@@ -279,10 +228,8 @@ const Header = () => {
     [pathname, router, closeSidebar]
   );
 
-  // Touch gesture handlers
   const handleTouchStart = useCallback((e) => {
     setTouchStartX(e.touches[0].clientX);
-    setTouchMoveX(e.touches[0].clientX);
     if (sidebarRef.current) {
       sidebarRef.current.style.transition = "none";
     }
@@ -292,15 +239,12 @@ const Header = () => {
     (e) => {
       if (touchStartX === null || !sidebarRef.current) return;
       const currentX = e.touches[0].clientX;
-      setTouchMoveX(currentX);
-
       const deltaX = currentX - touchStartX;
-      const sidebarElement = sidebarRef.current;
 
       if (deltaX > 0) {
-        sidebarElement.style.transform = `translateX(${deltaX}px)`;
+        sidebarRef.current.style.transform = `translateX(${deltaX}px)`;
       } else {
-        sidebarElement.style.transform = `translateX(0px)`;
+        sidebarRef.current.style.transform = `translateX(0px)`;
       }
     },
     [touchStartX]
@@ -309,7 +253,7 @@ const Header = () => {
   const handleTouchEnd = useCallback(() => {
     if (touchStartX === null || !sidebarRef.current) return;
     const sidebarElement = sidebarRef.current;
-    const deltaX = touchMoveX - touchStartX;
+    const deltaX = (sidebarElement.getBoundingClientRect().left);
 
     if (sidebarRef.current) {
       sidebarRef.current.style.transition = "";
@@ -323,10 +267,8 @@ const Header = () => {
       sidebarElement.style.transform = `translateX(0px)`;
     }
     setTouchStartX(null);
-    setTouchMoveX(null);
-  }, [touchStartX, touchMoveX, closeSidebar]);
+  }, [touchStartX, closeSidebar]);
 
-  // Dropdown render functions
   const renderDropdownSAP = (isMobile = false) => (
     <div
       className={styles.dropdown}
@@ -367,9 +309,7 @@ const Header = () => {
           >
             <span
               className={`${styles.arrow} ${
-                mobileOpenDropdown === "dropdown2"
-                  ? styles.arrowUp
-                  : styles.arrowDown
+                mobileOpenDropdown === "dropdown2" ? styles.arrowUp : styles.arrowDown
               }`}
             ></span>
           </button>
@@ -377,10 +317,7 @@ const Header = () => {
       </div>
       {((isMobile && mobileOpenDropdown === "dropdown2") ||
         (!isMobile && isDropdownVisible.dropdown2)) && (
-        <ul
-          className={`${styles.dropdownMenu} ${styles.show}`}
-          aria-labelledby="dropdownMenuButton2"
-        >
+        <ul className={`${styles.dropdownMenu} ${styles.show}`} aria-labelledby="dropdownMenuButton2">
           {[
             {
               title: "SAP Functional",
@@ -396,10 +333,7 @@ const Header = () => {
                 { name: "SAP PS", link: "/sap-ps-course-in-pune" },
                 { name: "SAP EWM", link: "/sap-ewm-course-in-pune" },
                 { name: "SAP SCM", link: "/sap-scm-course-in-pune" },
-                {
-                  name: "SAP SUCCESSFACTOR",
-                  link: "/sap-successfactors-course-in-pune",
-                },
+                { name: "SAP SUCCESSFACTOR", link: "/sap-successfactors-course-in-pune" },
               ],
             },
             {
@@ -419,18 +353,10 @@ const Header = () => {
                     <span className={styles.subMenuTitle}>{submenu.title}</span>
                     <span className={styles.subMenuArrow}></span>
                   </div>
-                  <ul
-                    className={`${styles.dropdownMenu} ${
-                      isMobile ? styles.mobileSubmenu : styles.dropdownSubmenu
-                    }`}
-                  >
+                  <ul className={`${styles.dropdownMenu} ${isMobile ? styles.mobileSubmenu : styles.dropdownSubmenu}`}>
                     {submenu.items.map((item, subIndex) => (
                       <li key={subIndex}>
-                        <Link
-                          className={styles.dropdownItem}
-                          href={item.link}
-                          onClick={() => handleNavClick(item.link)}
-                        >
+                        <Link className={styles.dropdownItem} href={item.link} onClick={() => handleNavClick(item.link)}>
                           {item.name}
                         </Link>
                       </li>
@@ -438,11 +364,7 @@ const Header = () => {
                   </ul>
                 </>
               ) : (
-                <Link
-                  className={styles.dropdownItem}
-                  href={submenu.link}
-                  onClick={() => handleNavClick(submenu.link)}
-                >
+                <Link className={styles.dropdownItem} href={submenu.link} onClick={() => handleNavClick(submenu.link)}>
                   {submenu.title}
                 </Link>
               )}
@@ -459,7 +381,7 @@ const Header = () => {
       onMouseEnter={() => handleMouseEnter("dropdown3")}
       onMouseLeave={() => handleMouseLeave("dropdown3")}
     >
-            <div className={styles.dropdownToggleWrapper}>
+      <div className={styles.dropdownToggleWrapper}>
         <Link
           href="/it-course-in-pune"
           className={`${styles.navLink} ${styles.dropdownToggle} ${
@@ -493,9 +415,7 @@ const Header = () => {
           >
             <span
               className={`${styles.arrow} ${
-                mobileOpenDropdown === "dropdown3"
-                  ? styles.arrowUp
-                  : styles.arrowDown
+                mobileOpenDropdown === "dropdown3" ? styles.arrowUp : styles.arrowDown
               }`}
             ></span>
           </button>
@@ -503,53 +423,23 @@ const Header = () => {
       </div>
       {((isMobile && mobileOpenDropdown === "dropdown3") ||
         (!isMobile && isDropdownVisible.dropdown3)) && (
-        <ul
-          className={`${styles.dropdownMenu} ${styles.show}`}
-          aria-labelledby="dropdownMenuButton3"
-        >
+        <ul className={`${styles.dropdownMenu} ${styles.show}`} aria-labelledby="dropdownMenuButton3">
           {[
             {
               title: "Data Science",
               items: [
-                {
-                  name: "MASTERS IN DATA ANALYTICS",
-                  link: "/data-analytics-course-in-pune",
-                },
-                {
-                  name: "MASTERS IN DATA SCIENCE",
-                  link: "/data-science-course-in-pune",
-                },
-                {
-                  name: "MASTERS IN BUSINESS ANALYTICS",
-                  link: "/business-analytics-course-in-pune",
-                },
+                { name: "MASTERS IN DATA ANALYTICS", link: "/data-analytics-course-in-pune" },
+                { name: "MASTERS IN DATA SCIENCE", link: "/data-science-course-in-pune" },
+                { name: "MASTERS IN BUSINESS ANALYTICS", link: "/business-analytics-course-in-pune" },
                 { name: "CHAT GPT & AI", link: "/chatgpt-course-in-pune" },
               ],
             },
-            {
-              title: "Full Stack Training",
-              link: "/full-stack-developer-course-in-pune",
-            },
-            {
-              title: "JAVA",
-              link: "/java-course-in-pune",
-            },
-            {
-              title: "MERN Stack",
-              link: "/mern-stack-course-in-pune",
-            },
-            {
-              title: "UI/UX Design",
-              link: "/ui-ux-course-in-pune",
-            },
-            {
-              title: "Python",
-              link: "/python-course-in-pune",
-            },
-            {
-              title: "Salesforce",
-              link: "/salesforce-course-in-pune",
-            },
+            { title: "Full Stack Training", link: "/full-stack-developer-course-in-pune" },
+            { title: "JAVA", link: "/java-course-in-pune" },
+            { title: "MERN Stack", link: "/mern-stack-course-in-pune" },
+            { title: "UI/UX Design", link: "/ui-ux-course-in-pune" },
+            { title: "Python", link: "/python-course-in-pune" },
+            { title: "Salesforce", link: "/salesforce-course-in-pune" },
           ].map((submenu, index) => (
             <li key={index} className={styles.megaMenuItem}>
               {submenu.items ? (
@@ -558,18 +448,10 @@ const Header = () => {
                     <span className={styles.subMenuTitle}>{submenu.title}</span>
                     <span className={styles.subMenuArrow}></span>
                   </div>
-                  <ul
-                    className={`${styles.dropdownMenu} ${
-                      isMobile ? styles.mobileSubmenu : styles.dropdownSubmenu
-                    }`}
-                  >
+                  <ul className={`${styles.dropdownMenu} ${isMobile ? styles.mobileSubmenu : styles.dropdownSubmenu}`}>
                     {submenu.items.map((item, subIndex) => (
                       <li key={subIndex}>
-                        <Link
-                          className={styles.dropdownItem}
-                          href={item.link}
-                          onClick={() => handleNavClick(item.link)}
-                        >
+                        <Link className={styles.dropdownItem} href={item.link} onClick={() => handleNavClick(item.link)}>
                           {item.name}
                         </Link>
                       </li>
@@ -577,11 +459,7 @@ const Header = () => {
                   </ul>
                 </>
               ) : (
-                <Link
-                  className={styles.dropdownItem}
-                  href={submenu.link}
-                  onClick={() => handleNavClick(submenu.link)}
-                >
+                <Link className={styles.dropdownItem} href={submenu.link} onClick={() => handleNavClick(submenu.link)}>
                   {submenu.title}
                 </Link>
               )}
@@ -632,9 +510,7 @@ const Header = () => {
           >
             <span
               className={`${styles.arrow} ${
-                mobileOpenDropdown === "dropdown4"
-                  ? styles.arrowUp
-                  : styles.arrowDown
+                mobileOpenDropdown === "dropdown4" ? styles.arrowUp : styles.arrowDown
               }`}
             ></span>
           </button>
@@ -642,21 +518,14 @@ const Header = () => {
       </div>
       {((isMobile && mobileOpenDropdown === "dropdown4") ||
         (!isMobile && isDropdownVisible.dropdown4)) && (
-        <ul
-          className={`${styles.dropdownMenu} ${styles.show}`}
-          aria-labelledby="dropdownMenuButton4"
-        >
+        <ul className={`${styles.dropdownMenu} ${styles.show}`} aria-labelledby="dropdownMenuButton4">
           {[
             { name: "Tableau", link: "/tableau-course-in-pune" },
             { name: "Power BI", link: "/power-bi-course-in-pune" },
             { name: "SQL", link: "/sql-course-in-pune" },
           ].map((item, index) => (
             <li key={index}>
-              <Link
-                className={styles.dropdownItem}
-                href={item.link}
-                onClick={() => handleNavClick(item.link)}
-              >
+              <Link className={styles.dropdownItem} href={item.link} onClick={() => handleNavClick(item.link)}>
                 {item.name}
               </Link>
             </li>
@@ -706,9 +575,7 @@ const Header = () => {
           >
             <span
               className={`${styles.arrow} ${
-                mobileOpenDropdown === "dropdown5"
-                  ? styles.arrowUp
-                  : styles.arrowDown
+                mobileOpenDropdown === "dropdown5" ? styles.arrowUp : styles.arrowDown
               }`}
             ></span>
           </button>
@@ -716,35 +583,13 @@ const Header = () => {
       </div>
       {((isMobile && mobileOpenDropdown === "dropdown5") ||
         (!isMobile && isDropdownVisible.dropdown5)) && (
-        <ul
-          className={`${styles.dropdownMenu} ${styles.show}`}
-          aria-labelledby="dropdownMenuButton5"
-        >
+        <ul className={`${styles.dropdownMenu} ${styles.show}`} aria-labelledby="dropdownMenuButton5">
           {[
-            {
-              name: "Advance Digital Marketing",
-              link: "/digital-marketing-course-in-pune",
-            },
-            {
-              name: "Pay Per Click Training",
-              link: "/digital-marketing-course-in-pune#pay-per-click",
-              section: "pay-per-click",
-            },
-            {
-              name: "Search Engine Optimization",
-              link: "/digital-marketing-course-in-pune#search-engine-optimization",
-              section: "search-engine-opti",
-            },
-            {
-              name: "Social Media Marketing",
-              link: "/digital-marketing-course-in-pune#social-media-marketing",
-              section: "social-media",
-            },
-            {
-              name: "Advance Google Analytics Training",
-              link: "/digital-marketing-course-in-pune#advance-analytics",
-              section: "advance-analytics",
-            },
+            { name: "Advance Digital Marketing", link: "/digital-marketing-course-in-pune" },
+            { name: "Pay Per Click Training", link: "/digital-marketing-course-in-pune#pay-per-click", section: "pay-per-click" },
+            { name: "Search Engine Optimization", link: "/digital-marketing-course-in-pune#search-engine-optimization", section: "search-engine-opti" },
+            { name: "Social Media Marketing", link: "/digital-marketing-course-in-pune#social-media-marketing", section: "social-media" },
+            { name: "Advance Google Analytics Training", link: "/digital-marketing-course-in-pune#advance-analytics", section: "advance-analytics" },
           ].map((item, index) => (
             <li key={index}>
               <Link
@@ -805,9 +650,7 @@ const Header = () => {
           >
             <span
               className={`${styles.arrow} ${
-                mobileOpenDropdown === "dropdown6"
-                  ? styles.arrowUp
-                  : styles.arrowDown
+                mobileOpenDropdown === "dropdown6" ? styles.arrowUp : styles.arrowDown
               }`}
             ></span>
           </button>
@@ -815,10 +658,7 @@ const Header = () => {
       </div>
       {((isMobile && mobileOpenDropdown === "dropdown6") ||
         (!isMobile && isDropdownVisible.dropdown6)) && (
-        <ul
-          className={`${styles.dropdownMenu} ${styles.show}`}
-          aria-labelledby="dropdownMenuButton6"
-        >
+        <ul className={`${styles.dropdownMenu} ${styles.show}`} aria-labelledby="dropdownMenuButton6">
           {[
             { name: "HR Training", link: "/hr-training-course-in-pune" },
             { name: "Core HR", link: "/core-hr-course-in-pune" },
@@ -828,11 +668,7 @@ const Header = () => {
             { name: "HR Analytics", link: "/hr-analytics-course-in-pune" },
           ].map((item, index) => (
             <li key={index}>
-              <Link
-                className={styles.dropdownItem}
-                href={item.link}
-                onClick={() => handleNavClick(item.link)}
-              >
+              <Link className={styles.dropdownItem} href={item.link} onClick={() => handleNavClick(item.link)}>
                 {item.name}
               </Link>
             </li>
@@ -844,13 +680,7 @@ const Header = () => {
 
   return (
     <>
-      <Navbar
-        expand="lg"
-        className={`${styles.headerNav} ${scrolled ? styles.scrolled : ""} ${
-          floatingNav ? styles.floating : ""
-        } ${isTransitioning ? styles.transitioning : ""}`}
-        ref={navbarRef}
-      >
+      <Navbar expand="lg" className={`${styles.headerNav} ${scrolled ? styles.scrolled : ""} ${floatingNav ? styles.floating : ""}`}>
         <Container fluid className={styles.navContainer}>
           <div className={styles.logo}>
             <Link href="/" className={styles.logoLink}>
@@ -869,7 +699,6 @@ const Header = () => {
             </Link>
           </div>
 
-          {/* Hamburger Button */}
           <Button
             className={styles.navbarToggler}
             aria-controls="basic-navbar-nav"
@@ -890,9 +719,7 @@ const Header = () => {
               <>
                 <div className={styles.navItem}>
                   <Link
-                    className={`${styles.navLink} ${
-                      activeLink === "aboutus" ? styles.active : ""
-                    }`}
+                    className={`${styles.navLink} ${activeLink === "aboutus" ? styles.active : ""}`}
                     href="/aboutus"
                     onClick={() => handleNavClick("aboutus")}
                   >
@@ -910,14 +737,9 @@ const Header = () => {
         </Container>
       </Navbar>
 
-      {/* Sidebar for Smaller Screens with Touch Support */}
       {isSidebarVisible && (
         <>
-                    <div
-            className={`${styles.sidebarOverlay} ${styles.visible}`}
-            onClick={closeSidebar}
-            aria-hidden="true"
-          />
+          <div className={`${styles.sidebarOverlay} ${styles.visible}`} onClick={closeSidebar} aria-hidden="true" />
           <aside
             className={`${styles.sidebar} ${styles.visible}`}
             ref={sidebarRef}
@@ -930,11 +752,7 @@ const Header = () => {
           >
             <div className={styles.sidebarHeader}>
               <div className={styles.mobileLogoContainer}>
-                <Link
-                  href="/"
-                  className={styles.mobileLogo}
-                  onClick={closeSidebar}
-                >
+                <Link href="/" className={styles.mobileLogo} onClick={closeSidebar}>
                   <AnimatedLogo className={styles.sidebarLogo} />
                   <Image
                     src="/Navbar/logo.webp"
@@ -946,11 +764,7 @@ const Header = () => {
                   />
                 </Link>
               </div>
-              <Button
-                className={styles.btnClose}
-                onClick={closeSidebar}
-                aria-label="Close navigation menu"
-              />
+              <Button className={styles.btnClose} onClick={closeSidebar} aria-label="Close navigation menu" />
             </div>
 
             <Nav className={styles.sidebarNav}>
@@ -965,9 +779,7 @@ const Header = () => {
                   href="/aboutus"
                   onClick={() => handleNavClick("aboutus")}
                   className={`nav-link px-3 py-2 fw-semibold text-dark border rounded-pill me-2 ${
-                    activeLink === "aboutus"
-                      ? "text-primary border-primary bg-light"
-                      : "text-muted border-secondary"
+                    activeLink === "aboutus" ? "text-primary border-primary bg-light" : "text-muted border-secondary"
                   }`}
                 >
                   About us
@@ -983,11 +795,7 @@ const Header = () => {
               </div>
             </Nav>
             <div className={styles.mobileCtaContainer}>
-              <Link
-                href="/contactus"
-                className={styles.mobileCta}
-                onClick={closeSidebar}
-              >
+              <Link href="/contactus" className={styles.mobileCta} onClick={closeSidebar}>
                 Contact Us Now
               </Link>
             </div>

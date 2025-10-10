@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "@/styles/HomePage/Placement.module.css";
 
@@ -63,43 +63,29 @@ const PlacementSection = () => {
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const carouselRef = useRef(null);
 
   useEffect(() => {
-    // Standard sliding interval (3 seconds)
     const slideInterval = setInterval(() => {
-      if (!isPaused) {
-        setActiveIndex(
-          (prevIndex) => (prevIndex + 1) % placementStories.length
-        );
-      }
+      setActiveIndex((prevIndex) => (prevIndex + 1) % placementStories.length);
     }, 3000);
 
     return () => clearInterval(slideInterval);
-  }, [isPaused, placementStories.length]);
-
-  const handleMouseEnter = () => {
-    setIsPaused(false);
-  };
-
-  const handleMouseLeave = () => {
-    setIsPaused(false);
-  };
+  }, [placementStories.length]);
 
   const handleCardClick = (index) => {
     setActiveIndex(index);
   };
 
   const renderCards = () => {
+    const halfLength = Math.floor(placementStories.length / 2);
+
     return placementStories.map((story, index) => {
-      // Calculate distance from active index for scaling effect
       let position = index - activeIndex;
 
       // Handle wrapping for infinite effect
-      if (position < -Math.floor(placementStories.length / 2)) {
+      if (position < -halfLength) {
         position += placementStories.length;
-      } else if (position > Math.floor(placementStories.length / 2)) {
+      } else if (position > halfLength) {
         position -= placementStories.length;
       }
 
@@ -113,8 +99,7 @@ const PlacementSection = () => {
       } else if (Math.abs(position) === 2) {
         cardClass = position < 0 ? styles.farPrevCard : styles.farNextCard;
       } else if (Math.abs(position) === 3) {
-        cardClass =
-          position < 0 ? styles.extraFarPrevCard : styles.extraFarNextCard;
+        cardClass = position < 0 ? styles.extraFarPrevCard : styles.extraFarNextCard;
       } else {
         cardClass = styles.hiddenCard;
       }
@@ -180,12 +165,7 @@ const PlacementSection = () => {
         <p>Our alumni are making remarkable strides in top organizations</p>
       </div>
 
-      <div
-        className={styles.carouselContainer}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        ref={carouselRef}
-      >
+      <div className={styles.carouselContainer}>
         <div className={styles.carouselBackground}></div>
         <div className={styles.carouselTrack}>{renderCards()}</div>
 

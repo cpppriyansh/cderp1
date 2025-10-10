@@ -41,12 +41,8 @@ const HeaderCarousel = () => {
     }
   ];
  
-  const getSlideTiming = (slideIndex) => {
-    return slideIndex === 2 ? 10000 : 20000;
-  };
- 
   useEffect(() => {
-    const currentTiming = getSlideTiming(currentSlide);
+    const currentTiming = currentSlide === 2 ? 40000 : 20000;
  
     if (currentSlide === 2 && !quizReady) {
       return;
@@ -54,22 +50,16 @@ const HeaderCarousel = () => {
  
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % components.length);
+      setQuizReady(false);
     }, currentTiming);
  
     return () => clearInterval(interval);
   }, [components.length, currentSlide, quizReady]);
  
-  useEffect(() => {
-    if (currentSlide === 3) {
-      setQuizReady(false);
-    }
-  }, [currentSlide]);
- 
   const goToSlide = (index) => {
     setCurrentSlide(index);
+    setQuizReady(false);
   };
- 
-  const slideHeight = 'min-h-[600px] md:min-h-[700px] lg:min-h-[800px]';
 
   return (
     <div className="w-full max-w-[1800px] mx-auto overflow-hidden relative">
