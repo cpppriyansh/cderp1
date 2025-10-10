@@ -438,7 +438,7 @@ const CareerMentorsComponent = () => {
         {/* Top Left Circle SVG */}
         <svg
   className="absolute top-0 left-0 w-full"
-  viewBox="0 0 1800 300"
+  viewBox="0 0 1800 400"
   preserveAspectRatio="none"
   style={{ height: '25%' }}
 >
@@ -469,7 +469,7 @@ const CareerMentorsComponent = () => {
               <div className="relative inline-block">
                 <h1 className="text-2xl sm:text-3xl font-black leading-tight text-gray-800">
                   <span className="text-white">Secure your </span>
-                  <span className="text-blue-600">Dream Career </span>
+                  <span className="text-[#182E4A]">Dream Career </span>
                   <span className="text-white">with Live Classes</span>
                 </h1>
                 
@@ -506,7 +506,7 @@ const CareerMentorsComponent = () => {
               <div className="relative inline-block">
                 <h1 className="text-2xl md:text-4xl font-black leading-tight text-gray-800">
                   <span className="text-white">Secure your </span>
-                  <span className="text-blue-600">Dream Career </span>
+                  <span className="text-[#182E4A]">Dream Career </span>
                   <span className="text-white">with Live Classes</span>
                 </h1>
                 
@@ -575,7 +575,7 @@ const CareerMentorsComponent = () => {
                     <span className="block text-white mb-3 lg:mb-4">
                       Secure your
                     </span>
-                    <span className="block text-blue-600 bg-clip-text mb-3 lg:mb-4">
+                    <span className="block text-[#182E4A] bg-clip-text mb-3 lg:mb-4">
                       Dream Career
                     </span>
                     <span className="block text-white text-3xl lg:text-4xl xl:text-5xl">
@@ -590,7 +590,7 @@ const CareerMentorsComponent = () => {
                 </div>
                 
                 <p className="text-lg lg:text-xl text-gray-100 leading-relaxed">
-                  From <span className="font-bold text-blue-600">Industry Experts</span>
+                  From <span className="font-bold text-blue-700">Industry Experts</span>
                 </p>
               </div>
 

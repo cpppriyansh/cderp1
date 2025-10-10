@@ -1,5 +1,4 @@
 "use client";
-
 import Wave from "react-wavify";
 import "../styles/Wave.css"; // Ensure this CSS file exists in the styles folder
 

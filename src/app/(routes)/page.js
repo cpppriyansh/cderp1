@@ -7,7 +7,6 @@ const Loading = () => <div className="loading-placeholder">Loading...</div>;
 
 // Critical above-the-fold component - load immediately
 import HeaderCarousel from "@/components/HomePage/HeaderCarousel";
-import Marquee from "@/components/HomePage/Marquee2";
 import Chevron from "@/components/HomePage/Chevron";
 
 // Lazy load below-the-fold components with Suspense and fallback loaders

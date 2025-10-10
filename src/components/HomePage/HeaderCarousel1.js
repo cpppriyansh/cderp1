@@ -56,7 +56,7 @@ const CareerHeroSlide = ({ onOpenForm }) => {
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white">
                 <span className="block sm:inline">
                   Unlock your{" "}
-                  <span className="text-blue-400 relative inline-block">
+                  <span className="text-[#182E4A] relative inline-block">
                     Career
                     <span className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-0.5 sm:h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transform scale-x-0 animate-[scaleX_1s_ease-out_0.5s_forwards]"></span>
                   </span>
