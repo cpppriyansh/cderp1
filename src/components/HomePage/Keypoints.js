@@ -22,11 +22,11 @@ const OrbitalTrail = () => {
     },
     {
       id: 2,
-      label: "MNC Experienced Professional",
+      label: "Working professional trainers",
       color: "#98D8EF",
       cover: "/Keypoints/corporate-alt.avif",
-      title: "MNC Experienced Professional",
-      desc: "Learn from MNC-experienced professionals! Gain real-world insights, expert guidance, and industry-ready skills to help you succeed in today's job market.",
+      title: "Working professional trainers",
+      desc: "Learn from Working professional trainers! Gain real-world insights, expert guidance, and industry-ready skills to help you succeed in today's job market.",
       className: "logo1",
     },
     {
@@ -49,10 +49,10 @@ const OrbitalTrail = () => {
     },
     {
       id: 5,
-      label: "Real Time Training & Project",
+      label: "Real Time Training & Scenario",
       color: "#98D8EF",
       cover: "/Keypoints/clock.avif",
-      title: "Real Time Training & Project",
+      title: "Real Time Training & Scenario",
       desc: "Get hands-on experience with real-time training & real-time scenario designed to build practical skills and boost your job readiness from day one!",
       className: "logo4",
     },

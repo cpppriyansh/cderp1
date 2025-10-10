@@ -14,7 +14,7 @@ export default function OfferLetter() {
   const steps = [
     { label: 'Enroll', color: '#34D399', topColored: true, icon: <img src="https://res.cloudinary.com/dujw4np0d/image/upload/v1756463856/business-contract_qech7t.avif" alt="Enroll" className="w-10 h-10" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} /> },
     { label: 'Corporate Training', color: '#FBBF24', topColored: false, icon: <img src="https://res.cloudinary.com/dujs6xvde/image/upload/v1760087019/investment_gcc5b9_compressed_svrrey.avif" alt="Corporate Training" className="w-10 h-10" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} /> },
-    { label: 'Real-Time Projects', color: '#8B5CF6', topColored: true, icon: <img src="https://res.cloudinary.com/dujs6xvde/image/upload/v1760086876/tasks_blby9z_compressed_plbokk.avif" alt="Real-Time Projects" className="w-10 h-10" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} /> },
+    { label: 'Real-Time Scenario', color: '#8B5CF6', topColored: true, icon: <img src="https://res.cloudinary.com/dujs6xvde/image/upload/v1760086876/tasks_blby9z_compressed_plbokk.avif" alt="Real-Time Scenario" className="w-10 h-10" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} /> },
     { label: 'Interview Preparation', color: '#FB7185', topColored: false, icon:<img src="https://res.cloudinary.com/dujs6xvde/image/upload/v1760087151/interview_jwdnvq_compressed_kpyr9x.avif" alt="Interview Preparation" className="w-10 h-10" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} /> },
     { label: 'Experience Alteration', color: '#6366F1', topColored: true, icon: <img src="https://res.cloudinary.com/dujs6xvde/image/upload/v1760086929/personalization_h2ezuq_compressed_hq42o0.avif" alt="Experience Alteration" className="w-10 h-10" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} /> },
     { label: 'Job Assistance', color: '#F59E0B', topColored: false, icon: <img src="https://res.cloudinary.com/dujw4np0d/image/upload/v1756464856/job-offer_ilhojs.avif" alt="Job Assistance" className="w-10 h-10" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />}
@@ -58,9 +58,9 @@ export default function OfferLetter() {
   }, []);
 
   const splitLabelIntoTwo = (text) => {
-    const words = text.trim().split(/\s+/);
+    const words = text.trim().split(/(\s+)/);
     if (words.length === 1) return [words[0], null];
-    if (words.length === 2) return [words[0], words[1]];
+    if (words.length <= 3) return [words[0], words.slice(1).join('')];
 
     const total = text.length;
     let bestIdx = 0;

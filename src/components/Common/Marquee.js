@@ -3,129 +3,88 @@
 import { useEffect, useState } from "react";
 import styles from "@/styles/Common/Marquee.module.css";
 
-// Helper function to get the ordinal suffix (st, nd, rd, th)
+// Constants
+const TARGET_DAYS = [5, 10, 15, 20, 25, 30];
+const MONTH_NAMES = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+// Simplified ordinal suffix
 const getOrdinalSuffix = (day) => {
-  if (day > 3 && day < 21) return "th"; // Covers 4th to 20th
-  switch (day % 10) {
-    case 1:
-      return "st";
-    case 2:
-      return "nd";
-    case 3:
-      return "rd";
-    default:
-      return "th";
-  }
+  if (day > 3 && day < 21) return "th";
+  return ["th", "st", "nd", "rd"][day % 10] || "th";
 };
 
-// Helper function to format the date
+// Simplified date formatter
 const formatDate = (date) => {
   const day = date.getDate();
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const suffix = getOrdinalSuffix(day);
-  return `${day}${suffix} ${monthNames[date.getMonth()]}`;
+  return `${day}${getOrdinalSuffix(day)} ${MONTH_NAMES[date.getMonth()]}`;
 };
 
-// Helper function to calculate the next target date
+// Simplified next target date calculation
 const getNextTargetDate = () => {
-  const targetDays = [5, 10, 15, 20, 25, 30];
   const today = new Date();
   const currentDay = today.getDate();
-  const currentMonth = today.getMonth();
-  const currentYear = today.getFullYear();
-
-  let nextDay = -1;
-
-  // Find the first target day strictly greater than the current day
-  for (const day of targetDays) {
-    if (day > currentDay) {
-      nextDay = day;
-      break;
-    }
+  const nextDay = TARGET_DAYS.find(day => day > currentDay);
+  
+  if (nextDay) {
+    return new Date(today.getFullYear(), today.getMonth(), nextDay);
   }
-
-  let nextDate;
-  if (nextDay !== -1) {
-    // Found a target day in the current month
-    nextDate = new Date(currentYear, currentMonth, nextDay);
-  } else {
-    // No target day left in the current month, go to the 5th of the next month
-    nextDate = new Date(currentYear, currentMonth + 1, 5);
-  }
-
-  return nextDate;
+  
+  // Next month, 5th day
+  return new Date(today.getFullYear(), today.getMonth() + 1, 5);
 };
 
 const Marquee = () => {
-  const [displayDate, setDisplayDate] = useState("");
+  const [forceUpdate, setForceUpdate] = useState(0);
 
   useEffect(() => {
-    // Function to calculate and update the displayed date
-    const updateDate = () => {
-      const nextTargetDate = getNextTargetDate();
-      const formattedDate = formatDate(nextTargetDate);
-      setDisplayDate(formattedDate);
-      // console.log(`Today: ${new Date().toLocaleDateString()}, Displaying: ${formattedDate}`); // For debugging
+    // Calculate milliseconds until next midnight
+    const getMillisecondsUntilMidnight = () => {
+      const now = new Date();
+      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      return tomorrow - now;
     };
 
-    // Calculate date initially
-    updateDate();
+    // Update at midnight
+    const scheduleNextUpdate = () => {
+      const msUntilMidnight = getMillisecondsUntilMidnight();
+      return setTimeout(() => {
+        setForceUpdate(prev => prev + 1);
+        scheduleNextUpdate(); // Schedule next midnight update
+      }, msUntilMidnight);
+    };
 
-    // Set up an interval to check and potentially update the date every minute.
-    // This ensures reasonably timely updates around midnight.
-    const intervalId = setInterval(updateDate, 60000); // Check every 60 seconds
+    const timeoutId = scheduleNextUpdate();
+    return () => clearTimeout(timeoutId);
+  }, [forceUpdate]);
 
-    // Cleanup interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []); // Empty dependency array ensures this runs only on mount and unmount
-
-  // Use the same dynamic date for all relevant items
-  const dynamicDateText = displayDate ? ` ${displayDate}` : ""; // Add space prefix
+  const displayDate = formatDate(getNextTargetDate());
 
   return (
     <div className={styles.mainContainerMarquee}>
       <div className={styles.mainContainerMarqueeTrack}>
-        {/* First Set of Items */}
         <div className={styles.mainContainerMarqueeItems}>
           <span className={styles.mainContainerMarqueeItem}>
-           SAP FICO Batch Starting Soon!
+            SAP FICO Batch Starting Soon!
           </span>
-
           <span className={styles.mainContainerMarqueeItem}>
-            {/* Dynamically update date here */}
-            Data Science A1 batch starting from{dynamicDateText}!
+            Data Science A1 batch starting from {displayDate}!
           </span>
         </div>
 
-        {/* Second Set of Items (Duplicate for seamless loop) */}
         <div className={styles.mainContainerMarqueeItems} aria-hidden="true">
           <span className={styles.mainContainerMarqueeItem}>
-            {/* Dynamically update date here */}
-            Get exciting benefits by registering before{dynamicDateText}! 
+            Get exciting benefits by registering before {displayDate}!
           </span>
-
           <span className={styles.mainContainerMarqueeItem}>
-            {/* Dynamically update date here */}
-            SAP HANA batch commencing on{dynamicDateText}! 
+            SAP HANA batch commencing on {displayDate}!
           </span>
         </div>
       </div>
     </div>
-  );  
+  );
 };
 
 export default Marquee;
- 

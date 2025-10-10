@@ -114,7 +114,7 @@ const AnimatedStatsSection = () => {
       value: '100%',
       shortDesc: '100% practical courses for real-world applications.',
       detailedInfo: 'Our institute offers a 100% Practical Courses tailored for industry needs, delivering proven outcomes.',
-      achievements: 'Project experience for students.',
+      achievements: 'Practical Courses experience for students.',
       color: 'from-blue-400 to-blue-500',
       cardGradient: 'from-pink-50 to-rose-50',
       accentColor: '#EC4899',

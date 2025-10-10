@@ -52,15 +52,14 @@ const CareerHeroSlide = ({ onOpenForm }) => {
             {/* Left Content */}
             <div className={`space-y-3 sm:space-y-4 md:space-y-6 transition-all duration-1000 ease-out ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
               
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white">
+              <h1 className="text-2xl sm:text-3xl md:text-3xl lg:text-6xl xl:text-6xl font-bold leading-tight text-white">
                 <span className="block sm:inline">
-                  Unlock your{" "}
+                Professional{" "}
                   <span className="text-[#93C5FD] relative inline-block">
-                    Career
-                    <span className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-0.5 sm:h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transform scale-x-0 animate-[scaleX_1s_ease-out_0.5s_forwards]"></span>
-                  </span>
+                  SAP & IT
+                   </span>
                 </span>{" "}
-                <span className="block sm:inline">potential</span>
+                <span className="block sm:inline">Training Institute</span>
               </h1>
 
               <div className="flex items-center space-x-1 sm:space-x-2 flex-wrap">

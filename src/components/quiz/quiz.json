@@ -1,0 +1,916 @@
+{
+    "javascript": {
+      "id": "javascript",
+      "title": "JavaScript Fundamentals Quiz",
+      "description": "Test your JavaScript knowledge with these essential questions",
+      "difficulty": "Medium",
+      "duration": 600,
+      "category": "Programming",
+      "icon": "⚡",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is the output of: typeof null?",
+          "options": ["null", "undefined", "object", "number"],
+          "correctAnswer": 2,
+          "explanation": "typeof null returns 'object' due to a bug in JavaScript that has been kept for backward compatibility."
+        },
+        {
+          "id": 2,
+          "question": "Which method is used to add elements to the end of an array?",
+          "options": ["unshift()", "push()", "shift()", "pop()"],
+          "correctAnswer": 1,
+          "explanation": "push() adds one or more elements to the end of an array and returns the new length."
+        },
+        {
+          "id": 3,
+          "question": "What does 'use strict' do in JavaScript?",
+          "options": [
+            "Makes code run faster",
+            "Enables strict mode with stricter error checking",
+            "Compresses the code",
+            "Converts ES6 to ES5"
+          ],
+          "correctAnswer": 1,
+          "explanation": "'use strict' enables strict mode, which catches common coding errors and prevents certain actions."
+        },
+        {
+          "id": 4,
+          "question": "What is a closure in JavaScript?",
+          "options": [
+            "A function with no return value",
+            "A function that has access to its outer function scope",
+            "A way to close browser windows",
+            "An async function"
+          ],
+          "correctAnswer": 1,
+          "explanation": "A closure is a function that has access to variables in its outer (enclosing) lexical scope, even after the outer function has returned."
+        },
+        {
+          "id": 5,
+          "question": "What is the difference between == and ===?",
+          "options": [
+            "No difference",
+            "== checks type, === checks value",
+            "=== checks both type and value, == only checks value",
+            "=== is faster"
+          ],
+          "correctAnswer": 2,
+          "explanation": "=== (strict equality) checks both type and value, while == (loose equality) only checks value after type coercion."
+        },
+        {
+          "id": 6,
+          "question": "What does the spread operator (...) do?",
+          "options": [
+            "Multiplies numbers",
+            "Expands iterables into individual elements",
+            "Creates comments",
+            "Defines rest parameters only"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The spread operator (...) expands iterables (arrays, objects, strings) into individual elements."
+        },
+        {
+          "id": 7,
+          "question": "What is the output of: console.log(0.1 + 0.2 === 0.3)?",
+          "options": ["true", "false", "undefined", "NaN"],
+          "correctAnswer": 1,
+          "explanation": "Returns false due to floating-point precision errors. 0.1 + 0.2 equals 0.30000000000000004."
+        },
+        {
+          "id": 8,
+          "question": "Which array method does NOT mutate the original array?",
+          "options": ["push()", "splice()", "map()", "sort()"],
+          "correctAnswer": 2,
+          "explanation": "map() creates a new array with the results and does not modify the original array."
+        },
+        {
+          "id": 9,
+          "question": "What is hoisting in JavaScript?",
+          "options": [
+            "Moving variables to the top physically",
+            "Declarations are moved to the top of their scope during compilation",
+            "A CSS property",
+            "An optimization technique"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Hoisting is JavaScript's behavior of moving declarations to the top of their scope before code execution."
+        },
+        {
+          "id": 10,
+          "question": "What does Promise.all() do?",
+          "options": [
+            "Resolves when the first promise resolves",
+            "Resolves when all promises resolve, rejects if any reject",
+            "Always resolves",
+            "Cancels all promises"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Promise.all() takes an array of promises and resolves when all resolve, or rejects immediately if any promise rejects."
+        }
+      ]
+    },
+    "react": {
+      "id": "react",
+      "title": "React Basics Quiz",
+      "description": "Test your React fundamentals and hooks knowledge",
+      "difficulty": "Medium",
+      "duration": 480,
+      "category": "Frontend",
+      "icon": "⚛️",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is JSX?",
+          "options": [
+            "JavaScript XML - syntax extension for JavaScript",
+            "Java Syntax Extension",
+            "JSON Export",
+            "JavaScript Extra"
+          ],
+          "correctAnswer": 0,
+          "explanation": "JSX is a syntax extension for JavaScript that allows you to write HTML-like code in your JavaScript files."
+        },
+        {
+          "id": 2,
+          "question": "Which hook is used for side effects in React?",
+          "options": ["useState", "useEffect", "useContext", "useMemo"],
+          "correctAnswer": 1,
+          "explanation": "useEffect is used to perform side effects in function components, such as data fetching or subscriptions."
+        },
+        {
+          "id": 3,
+          "question": "What is the virtual DOM?",
+          "options": [
+            "A copy of the real DOM kept in memory",
+            "A new browser API",
+            "A CSS framework",
+            "A database"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The virtual DOM is a lightweight copy of the actual DOM kept in memory. React uses it to optimize updates."
+        },
+        {
+          "id": 4,
+          "question": "What does useState return?",
+          "options": [
+            "Just the state value",
+            "An array with state value and setter function",
+            "An object with state properties",
+            "A function"
+          ],
+          "correctAnswer": 1,
+          "explanation": "useState returns an array with two elements: the current state value and a function to update it."
+        },
+        {
+          "id": 5,
+          "question": "What is prop drilling?",
+          "options": [
+            "A debugging technique",
+            "Passing props through multiple component layers",
+            "A performance optimization",
+            "A routing method"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Prop drilling is passing props through multiple nested components to reach a deeply nested child component."
+        },
+        {
+          "id": 6,
+          "question": "What is the purpose of useCallback?",
+          "options": [
+            "To call functions automatically",
+            "To memoize callback functions",
+            "To handle errors",
+            "To fetch data"
+          ],
+          "correctAnswer": 1,
+          "explanation": "useCallback memoizes callback functions to prevent unnecessary re-renders of child components."
+        },
+        {
+          "id": 7,
+          "question": "How do you create a context in React?",
+          "options": [
+            "React.newContext()",
+            "React.createContext()",
+            "React.useContext()",
+            "React.Context()"
+          ],
+          "correctAnswer": 1,
+          "explanation": "React.createContext() is used to create a new context object for sharing data across components."
+        },
+        {
+          "id": 8,
+          "question": "What is the key prop used for?",
+          "options": [
+            "Styling elements",
+            "Identifying elements in lists for React's reconciliation",
+            "Accessing DOM elements",
+            "Creating animations"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The key prop helps React identify which items have changed, been added, or removed in lists."
+        }
+      ]
+    },
+    "nextjs": {
+      "id": "nextjs",
+      "title": "Next.js Essentials Quiz",
+      "description": "Test your Next.js framework knowledge",
+      "difficulty": "Advanced",
+      "duration": 540,
+      "category": "Frontend",
+      "icon": "▲",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is the difference between getStaticProps and getServerSideProps?",
+          "options": [
+            "No difference",
+            "getStaticProps runs at build time, getServerSideProps runs on each request",
+            "getStaticProps is faster",
+            "getServerSideProps is deprecated"
+          ],
+          "correctAnswer": 1,
+          "explanation": "getStaticProps generates static pages at build time, while getServerSideProps runs on every request."
+        },
+        {
+          "id": 2,
+          "question": "What is the purpose of the Link component in Next.js?",
+          "options": [
+            "To create external links",
+            "To enable client-side navigation without full page reload",
+            "To link CSS files",
+            "To connect to databases"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The Link component enables client-side navigation between pages without a full page reload."
+        },
+        {
+          "id": 3,
+          "question": "What is ISR (Incremental Static Regeneration)?",
+          "options": [
+            "A caching strategy",
+            "A way to update static pages after build without rebuilding the entire site",
+            "A database feature",
+            "A routing method"
+          ],
+          "correctAnswer": 1,
+          "explanation": "ISR allows you to update static content after deployment by regenerating pages in the background."
+        },
+        {
+          "id": 4,
+          "question": "Where do you configure environment variables in Next.js?",
+          "options": [
+            "package.json",
+            ".env.local file",
+            "next.config.js only",
+            "index.js"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Environment variables are configured in .env.local and accessed via process.env."
+        },
+        {
+          "id": 5,
+          "question": "What does the Image component optimize?",
+          "options": [
+            "Only file size",
+            "Image loading, sizing, format, and performance",
+            "Only format conversion",
+            "Nothing, it's just a wrapper"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The Image component provides automatic optimization for loading, sizing, format, and overall performance."
+        },
+        {
+          "id": 6,
+          "question": "What is the App Router in Next.js 13+?",
+          "options": [
+            "A deprecated feature",
+            "A new routing system using the app directory",
+            "A navigation component",
+            "A state management tool"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The App Router is a new routing system introduced in Next.js 13+ that uses the app directory for file-based routing."
+        }
+      ]
+    },
+    "html-css": {
+      "id": "html-css",
+      "title": "HTML & CSS Fundamentals",
+      "description": "Master the basics of HTML and CSS",
+      "difficulty": "Beginner",
+      "duration": 420,
+      "category": "Frontend",
+      "icon": "🎨",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does HTML stand for?",
+          "options": [
+            "Hyper Text Markup Language",
+            "High Tech Modern Language",
+            "Home Tool Markup Language",
+            "Hyperlinks and Text Markup Language"
+          ],
+          "correctAnswer": 0,
+          "explanation": "HTML stands for Hyper Text Markup Language, used to structure web pages."
+        },
+        {
+          "id": 2,
+          "question": "Which CSS property is used to change text color?",
+          "options": ["text-color", "font-color", "color", "text-style"],
+          "correctAnswer": 2,
+          "explanation": "The 'color' property is used to change the color of text in CSS."
+        },
+        {
+          "id": 3,
+          "question": "What is the correct HTML element for the largest heading?",
+          "options": ["<heading>", "<h6>", "<h1>", "<head>"],
+          "correctAnswer": 2,
+          "explanation": "<h1> is the largest heading element, ranging from h1 to h6."
+        },
+        {
+          "id": 4,
+          "question": "Which CSS property controls the spacing between elements?",
+          "options": ["padding", "margin", "spacing", "border"],
+          "correctAnswer": 1,
+          "explanation": "The 'margin' property controls the space outside an element's border."
+        },
+        {
+          "id": 5,
+          "question": "What is the purpose of the <div> tag?",
+          "options": [
+            "To divide content into sections",
+            "To create divisions in math",
+            "To display images",
+            "To create forms"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The <div> tag is a container used to group and organize content."
+        }
+      ]
+    },
+    "dsa": {
+      "id": "dsa",
+      "title": "Data Structures & Algorithms",
+      "description": "Test your DSA fundamentals",
+      "difficulty": "Advanced",
+      "duration": 720,
+      "category": "Programming",
+      "icon": "🧮",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is the time complexity of binary search?",
+          "options": ["O(n)", "O(log n)", "O(n²)", "O(1)"],
+          "correctAnswer": 1,
+          "explanation": "Binary search has O(log n) time complexity as it divides the search space in half each time."
+        },
+        {
+          "id": 2,
+          "question": "Which data structure uses LIFO principle?",
+          "options": ["Queue", "Stack", "Array", "Tree"],
+          "correctAnswer": 1,
+          "explanation": "Stack uses Last In First Out (LIFO) principle - the last element added is the first to be removed."
+        },
+        {
+          "id": 3,
+          "question": "What is the best case time complexity of Quick Sort?",
+          "options": ["O(n log n)", "O(n²)", "O(n)", "O(log n)"],
+          "correctAnswer": 0,
+          "explanation": "Quick Sort has O(n log n) time complexity in the best and average cases."
+        },
+        {
+          "id": 4,
+          "question": "Which traversal visits nodes in level order?",
+          "options": ["Inorder", "Preorder", "Postorder", "Level Order (BFS)"],
+          "correctAnswer": 3,
+          "explanation": "Level Order traversal (BFS) visits nodes level by level from top to bottom."
+        },
+        {
+          "id": 5,
+          "question": "What is a hash collision?",
+          "options": [
+            "When two keys hash to the same index",
+            "When hash function fails",
+            "When hash table is full",
+            "When keys are deleted"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A hash collision occurs when two different keys produce the same hash value."
+        }
+      ]
+    },
+    "sap-fico": {
+    "id": "sap-fico",
+    "title": "SAP FICO Fundamentals Quiz",
+    "description": "Test your SAP Finance and Controlling module knowledge",
+    "difficulty": "Medium",
+    "duration": 600,
+    "category": "SAP",
+    "icon": "💰",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What does FICO stand for in SAP?",
+        "options": [
+          "Finance and Cost Operations",
+          "Financial Accounting and Controlling",
+          "Fixed Income and Control Operations",
+          "Finance Integration and Cost Operations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "FICO stands for Financial Accounting (FI) and Controlling (CO), which are integrated modules in SAP for managing financial data and internal cost accounting."
+      },
+      {
+        "id": 2,
+        "question": "Which of the following is NOT a component of SAP FI?",
+        "options": [
+          "General Ledger (GL)",
+          "Accounts Payable (AP)",
+          "Cost Center Accounting",
+          "Accounts Receivable (AR)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Cost Center Accounting is part of SAP CO (Controlling) module, not FI. GL, AP, and AR are all components of SAP FI module."
+      },
+      {
+        "id": 3,
+        "question": "What is a Company Code in SAP?",
+        "options": [
+          "A unique identifier for employees",
+          "The smallest organizational unit for which financial statements are created",
+          "A code for company products",
+          "An internal department code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Company Code is the smallest organizational unit of external accounting for which a complete self-contained set of accounts can be drawn up for purposes of external reporting."
+      },
+      {
+        "id": 4,
+        "question": "What is the purpose of a Chart of Accounts in SAP?",
+        "options": [
+          "To list all company employees",
+          "To maintain a list of G/L accounts used by one or more company codes",
+          "To track inventory items",
+          "To manage customer relationships"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A Chart of Accounts is a list of all G/L accounts used by one or more company codes. It contains account numbers, account names, and control information."
+      },
+      {
+        "id": 5,
+        "question": "Which transaction code is used to create a vendor master record?",
+        "options": ["FK01", "XK01", "FD01", "VK01"],
+        "correctAnswer": 1,
+        "explanation": "XK01 is the transaction code used to create vendor master records in SAP. FK01 is for creating one-time vendors, FD01 is for customer master records."
+      },
+      {
+        "id": 6,
+        "question": "What is the difference between FI and CO modules?",
+        "options": [
+          "No difference, they are the same",
+          "FI handles external reporting, CO handles internal reporting",
+          "FI is for manufacturing, CO is for services",
+          "FI is newer than CO"
+        ],
+        "correctAnswer": 1,
+        "explanation": "FI (Financial Accounting) focuses on external reporting and legal requirements, while CO (Controlling) focuses on internal reporting, cost management, and profitability analysis."
+      },
+      {
+        "id": 7,
+        "question": "What is a Posting Key in SAP?",
+        "options": [
+          "A password for posting documents",
+          "A two-digit numerical key that controls the entry of line items",
+          "A keyboard shortcut",
+          "A user authorization level"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Posting Key is a two-digit numerical key that determines the transaction type (debit/credit), account type, and various field status settings for document line items."
+      },
+      {
+        "id": 8,
+        "question": "Which of the following is a CO component?",
+        "options": [
+          "Asset Accounting",
+          "Cost Center Accounting",
+          "Bank Accounting",
+          "Tax Accounting"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cost Center Accounting is a key component of the CO module used to track and allocate internal costs. The other options are part of the FI module."
+      },
+      {
+        "id": 9,
+        "question": "What is the purpose of Document Type in SAP?",
+        "options": [
+          "To classify and control accounting documents",
+          "To print documents",
+          "To scan physical documents",
+          "To delete old documents"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Document Type is used to classify and control accounting documents. It determines the number range, account types allowed, and whether the document can be reversed."
+      },
+      {
+        "id": 10,
+        "question": "What does the term 'Fiscal Year Variant' refer to in SAP?",
+        "options": [
+          "Different accounting standards",
+          "The definition of posting periods and fiscal year",
+          "Budget allocation methods",
+          "Tax calculation variants"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fiscal Year Variant defines the number of posting periods in a fiscal year and how they are structured. It can be calendar year-based or non-calendar year-based."
+      }
+    ]
+  },
+  "sap-mm": {
+    "id": "sap-mm",
+    "title": "SAP MM (Materials Management) Quiz",
+    "description": "Master SAP Materials Management concepts and processes",
+    "difficulty": "Medium",
+    "duration": 540,
+    "category": "SAP",
+    "icon": "📦",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What does MM stand for in SAP?",
+        "options": [
+          "Manufacturing Management",
+          "Materials Management",
+          "Master Maintenance",
+          "Material Marketing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "MM stands for Materials Management. It handles procurement, inventory management, and material valuation in SAP."
+      },
+      {
+        "id": 2,
+        "question": "Which transaction code is used to create a purchase order?",
+        "options": ["ME21N", "ME22N", "ME23N", "ME51N"],
+        "correctAnswer": 0,
+        "explanation": "ME21N is the transaction code to create a new purchase order. ME22N is for changing, ME23N for displaying, and ME51N is for creating a purchase requisition."
+      },
+      {
+        "id": 3,
+        "question": "What is a Material Master in SAP MM?",
+        "options": [
+          "A list of all materials ever ordered",
+          "A central repository for all material-related data",
+          "A report showing material costs",
+          "A vendor catalog"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Material Master is a central repository containing all information about materials/products such as descriptions, measurements, purchasing data, and accounting information."
+      },
+      {
+        "id": 4,
+        "question": "What is the procurement process flow in SAP MM?",
+        "options": [
+          "PR → PO → GR → IR",
+          "PO → PR → GR → IR",
+          "GR → PR → PO → IR",
+          "IR → GR → PO → PR"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The standard procurement process is: Purchase Requisition (PR) → Purchase Order (PO) → Goods Receipt (GR) → Invoice Receipt (IR)."
+      },
+      {
+        "id": 5,
+        "question": "What is the purpose of the Vendor Master Record?",
+        "options": [
+          "To track customer information",
+          "To store comprehensive information about suppliers",
+          "To manage employee data",
+          "To control material stocks"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Vendor Master Record stores all information about suppliers including contact details, payment terms, banking information, and purchasing organization data."
+      },
+      {
+        "id": 6,
+        "question": "Which document is created first in the procurement cycle?",
+        "options": [
+          "Purchase Order",
+          "Purchase Requisition",
+          "Goods Receipt",
+          "Invoice"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Purchase Requisition (PR) is typically the first document in the procurement cycle, representing an internal request to procurement to purchase materials or services."
+      },
+      {
+        "id": 7,
+        "question": "What is a Plant in SAP MM organizational structure?",
+        "options": [
+          "A manufacturing facility only",
+          "An organizational unit where materials are produced, stored, or distributed",
+          "A company's main office",
+          "A software installation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Plant is a key organizational unit representing a location where materials are manufactured, stored, planned, or where services are provided."
+      },
+      {
+        "id": 8,
+        "question": "What does the transaction code MIGO do?",
+        "options": [
+          "Create Purchase Order",
+          "Display Material Document",
+          "Process Goods Receipt/Issue",
+          "Create Vendor Master"
+        ],
+        "correctAnswer": 2,
+        "explanation": "MIGO is used to record goods movements including goods receipt, goods issue, transfer postings, and other inventory transactions."
+      }
+    ]
+  },
+  "sap-sd": {
+    "id": "sap-sd",
+    "title": "SAP SD (Sales & Distribution) Quiz",
+    "description": "Test your knowledge of SAP Sales and Distribution processes",
+    "difficulty": "Medium",
+    "duration": 540,
+    "category": "SAP",
+    "icon": "🛒",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What does SD stand for in SAP?",
+        "options": [
+          "System Design",
+          "Sales and Distribution",
+          "Supply and Demand",
+          "Service Delivery"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SD stands for Sales and Distribution. It handles the entire order-to-cash process including sales, shipping, and billing."
+      },
+      {
+        "id": 2,
+        "question": "What is the standard sales document flow in SAP SD?",
+        "options": [
+          "Inquiry → Quotation → Sales Order → Delivery → Billing",
+          "Sales Order → Inquiry → Delivery → Billing",
+          "Billing → Delivery → Sales Order",
+          "Delivery → Billing → Sales Order"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The complete sales cycle follows: Inquiry → Quotation → Sales Order → Delivery → Billing. However, all steps are not mandatory."
+      },
+      {
+        "id": 3,
+        "question": "Which transaction code is used to create a sales order?",
+        "options": ["VA01", "VA02", "VA03", "VL01N"],
+        "correctAnswer": 0,
+        "explanation": "VA01 is used to create a new sales order. VA02 is for changing, VA03 for displaying, and VL01N is for creating delivery."
+      },
+      {
+        "id": 4,
+        "question": "What is a Customer Master Record in SAP SD?",
+        "options": [
+          "A report of customer purchases",
+          "A central database containing all customer information",
+          "A list of potential customers",
+          "Customer feedback forms"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Customer Master Record contains all relevant information about a customer including general data, company code data, and sales area data."
+      },
+      {
+        "id": 5,
+        "question": "What is a Pricing Procedure in SAP SD?",
+        "options": [
+          "A method to negotiate prices",
+          "A sequence of conditions used to calculate the total price",
+          "A discount approval process",
+          "A payment term definition"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Pricing Procedure is a predefined sequence of condition types that determines how prices, discounts, surcharges, and taxes are calculated."
+      },
+      {
+        "id": 6,
+        "question": "What is the purpose of a Delivery Document?",
+        "options": [
+          "To bill the customer",
+          "To create a sales order",
+          "To record the shipment of goods to the customer",
+          "To track inventory"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Delivery Document (using VL01N) records the actual shipment of goods to the customer, including picking, packing, and goods issue."
+      },
+      {
+        "id": 7,
+        "question": "What is a Sales Organization in SAP SD?",
+        "options": [
+          "A department within the company",
+          "An organizational unit responsible for sale and distribution",
+          "A customer group",
+          "A product category"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Sales Organization is the highest organizational unit in SD that is responsible for distributing goods and services, negotiating sales conditions, and liable for product defects."
+      },
+      {
+        "id": 8,
+        "question": "Which document is used to invoice the customer?",
+        "options": [
+          "Sales Order",
+          "Delivery Note",
+          "Billing Document",
+          "Packing List"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Billing Document (created using VF01) is used to invoice the customer for goods delivered or services rendered. It's the final step in the SD process."
+      }
+    ]
+  },
+  "sap-basis": {
+    "id": "sap-basis",
+    "title": "SAP BASIS Administration Quiz",
+    "description": "Test your SAP BASIS technical administration knowledge",
+    "difficulty": "Advanced",
+    "duration": 600,
+    "category": "SAP",
+    "icon": "⚙️",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What does BASIS stand for in SAP?",
+        "options": [
+          "Business Application Software Integrated Solution",
+          "Basic Application System Integration Support",
+          "It's not an acronym, it means 'foundation' in German",
+          "Business and System Integration Services"
+        ],
+        "correctAnswer": 0,
+        "explanation": "BASIS stands for Business Application Software Integrated Solution. It's the technical foundation that enables SAP applications to function."
+      },
+      {
+        "id": 2,
+        "question": "Which transaction code is used to display system logs?",
+        "options": ["SM21", "SM37", "SM50", "ST22"],
+        "correctAnswer": 0,
+        "explanation": "SM21 is used to display system logs. SM37 shows batch jobs, SM50 displays work processes, and ST22 shows ABAP dumps."
+      },
+      {
+        "id": 3,
+        "question": "What is the purpose of the Transport Management System (TMS)?",
+        "options": [
+          "To transport goods in logistics",
+          "To move configuration and development objects between systems",
+          "To manage employee transportation",
+          "To track material movements"
+        ],
+        "correctAnswer": 1,
+        "explanation": "TMS is used to transport (move) configuration changes, custom developments, and other repository objects between different SAP systems (DEV → QAS → PRD)."
+      },
+      {
+        "id": 4,
+        "question": "What is a SAP Instance?",
+        "options": [
+          "A backup copy of SAP",
+          "A unit of an SAP system with its own set of work processes",
+          "A user license",
+          "A database table"
+        ],
+        "correctAnswer": 1,
+        "explanation": "An SAP Instance is an administrative unit that groups together SAP components providing one or more services. It has its own set of work processes and buffers."
+      },
+      {
+        "id": 5,
+        "question": "Which transaction is used for user administration?",
+        "options": ["SU01", "SM01", "SU10", "SE16"],
+        "correctAnswer": 0,
+        "explanation": "SU01 is the main transaction for user administration where you can create, modify, and maintain user master records including roles and authorizations."
+      },
+      {
+        "id": 6,
+        "question": "What is the SAP landscape typically composed of?",
+        "options": [
+          "Only Production system",
+          "Development, Quality, and Production systems",
+          "Single server installation",
+          "Cloud-only infrastructure"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The standard SAP landscape consists of three systems: Development (DEV), Quality/Testing (QAS), and Production (PRD), ensuring changes are properly tested before production."
+      },
+      {
+        "id": 7,
+        "question": "What is the purpose of transaction ST22?",
+        "options": [
+          "System monitoring",
+          "Display ABAP runtime errors (dumps)",
+          "User management",
+          "Database administration"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ST22 is used to display and analyze ABAP runtime errors (short dumps). It helps administrators and developers troubleshoot application issues."
+      },
+      {
+        "id": 8,
+        "question": "What does the Work Process type 'DIA' stand for?",
+        "options": [
+          "Diagnostic",
+          "Dialog",
+          "Direct Input Access",
+          "Data Integration Application"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DIA stands for Dialog work process. These handle interactive user requests and online transactions in SAP."
+      }
+    ]
+  },
+  "sap-hana": {
+    "id": "sap-hana",
+    "title": "SAP HANA Fundamentals Quiz",
+    "description": "Test your SAP HANA in-memory database knowledge",
+    "difficulty": "Advanced",
+    "duration": 600,
+    "category": "SAP",
+    "icon": "🗄️",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What does HANA stand for in SAP?",
+        "options": [
+          "High-performance Analytic Application",
+          "Hybrid Application Network Architecture",
+          "Historical Analytics and Native Applications",
+          "Hardware Accelerated Network Applications"
+        ],
+        "correctAnswer": 0,
+        "explanation": "HANA stands for High-performance Analytic Application (or Appliance). It's SAP's in-memory database platform."
+      },
+      {
+        "id": 2,
+        "question": "What is the primary advantage of SAP HANA?",
+        "options": [
+          "Lower cost than traditional databases",
+          "In-memory computing for real-time analytics",
+          "No need for database administrators",
+          "Works only with cloud infrastructure"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SAP HANA's primary advantage is in-memory computing, which stores data in RAM rather than on disk, enabling real-time processing and analytics."
+      },
+      {
+        "id": 3,
+        "question": "Which storage type is primarily used in SAP HANA?",
+        "options": [
+          "Disk-based storage only",
+          "Column-based storage",
+          "Row-based storage only",
+          "Cloud storage exclusively"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SAP HANA primarily uses column-based storage which is optimized for analytics and compression, though it also supports row-based storage for transactional data."
+      },
+      {
+        "id": 4,
+        "question": "What is SAP HANA Studio?",
+        "options": [
+          "A recording studio",
+          "An Eclipse-based development and administration tool",
+          "A data visualization tool",
+          "A mobile application"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SAP HANA Studio is an Eclipse-based integrated development environment used for developing, administering, and managing SAP HANA databases."
+      },
+      {
+        "id": 5,
+        "question": "What is the difference between OLAP and OLTP in HANA?",
+        "options": [
+          "No difference in HANA",
+          "OLAP is for analytics, OLTP is for transactions",
+          "OLAP is faster than OLTP",
+          "OLTP is deprecated in HANA"
+        ],
+        "correctAnswer": 1,
+        "explanation": "OLAP (Online Analytical Processing) is for analytical queries and reporting, while OLTP (Online Transaction Processing) is for transactional operations. HANA handles both efficiently."
+      },
+      {
+        "id": 6,
+        "question": "What is data compression in SAP HANA?",
+        "options": [
+          "Deleting old data",
+          "Reducing data size while maintaining accessibility",
+          "Backing up data",
+          "Encrypting sensitive information"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Data compression in HANA reduces the physical storage space required while keeping data fully accessible. HANA achieves compression ratios of 10:1 or higher."
+      }
+    ]
+  }
+}
+  

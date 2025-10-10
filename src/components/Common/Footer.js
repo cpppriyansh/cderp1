@@ -1,5 +1,3 @@
-// Footer.js
-
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,11 +9,8 @@ import {
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import { faMapMarkerAlt, faPhone } from "@fortawesome/free-solid-svg-icons";
-
-// Import the new Client Component that handles interactivity
 import FooterClient from "./FooterClient";
 
-// Centralize all the link data here. This is passed to FooterClient.
 const footerSections = [
   {
     title: "SAP S/4 HANA COURSES",
@@ -33,10 +28,7 @@ const footerSections = [
           { href: "/sap-pm-course-in-pune", text: "SAP PM COURSE" },
           { href: "/sap-scm-course-in-pune", text: "SAP SCM COURSE" },
           { href: "/sap-ewm-course-in-pune", text: "SAP EWM COURSE" },
-          {
-            href: "/sap-successfactors-course-in-pune",
-            text: "SAP SUCCESSFACTOR",
-          },
+          { href: "/sap-successfactors-course-in-pune", text: "SAP SUCCESSFACTOR" },
         ],
       },
       {
@@ -53,10 +45,7 @@ const footerSections = [
   {
     title: "IT COURSES",
     links: [
-      {
-        href: "/full-stack-developer-course-in-pune",
-        text: "FULL STACK TRAINING",
-      },
+      { href: "/full-stack-developer-course-in-pune", text: "FULL STACK TRAINING" },
       { href: "/java-course-in-pune", text: "JAVA" },
       { href: "/mern-stack-course-in-pune", text: "MERN STACK" },
       { href: "/ui-ux-course-in-pune", text: "UI/UX DESIGN" },
@@ -78,36 +67,18 @@ const footerSections = [
   {
     title: "DIGITAL MARKETING",
     links: [
-      {
-        href: "/digital-marketing-course-in-pune",
-        text: "ADVANCE DIGITAL MARKETING",
-      },
-      {
-        href: "/digital-marketing-course-in-pune",
-        text: "PAY PER CLICK TRAINING",
-      },
-      {
-        href: "/digital-marketing-course-in-pune",
-        text: "SEARCH ENGINE OPTIMIZATION",
-      },
-      {
-        href: "/digital-marketing-course-in-pune",
-        text: "SOCIAL MEDIA MARKETING",
-      },
+      { href: "/digital-marketing-course-in-pune", text: "ADVANCE DIGITAL MARKETING" },
+      { href: "/digital-marketing-course-in-pune", text: "PAY PER CLICK TRAINING" },
+      { href: "/digital-marketing-course-in-pune", text: "SEARCH ENGINE OPTIMIZATION" },
+      { href: "/digital-marketing-course-in-pune", text: "SOCIAL MEDIA MARKETING" },
     ],
   },
   {
     title: "DATA SCIENCE",
     links: [
-      {
-        href: "/data-analytics-course-in-pune",
-        text: "MASTERS IN DATA ANALYTICS",
-      },
+      { href: "/data-analytics-course-in-pune", text: "MASTERS IN DATA ANALYTICS" },
       { href: "/data-science-course-in-pune", text: "MASTERS IN DATA SCIENCE" },
-      {
-        href: "/business-analytics-course-in-pune",
-        text: "MASTERS IN BUSINESS ANALYTICS",
-      },
+      { href: "/business-analytics-course-in-pune", text: "MASTERS IN BUSINESS ANALYTICS" },
       { href: "/chatgpt-course-in-pune", text: "CHAT GPT & AI" },
     ],
   },
@@ -132,11 +103,18 @@ const footerSections = [
   },
 ];
 
+const socialLinks = [
+  { href: "https://www.facebook.com/sapinstallation.pune.9", icon: faFacebookF, bg: "hover:bg-[#3b5998]", label: "Facebook" },
+  { href: "https://wa.me/919004002941", icon: faWhatsapp, bg: "hover:bg-[#25d366]", label: "WhatsApp" },
+  { href: "https://youtube.com/@connectingdotserp?si=hSKEiEg3MdytdEe_", icon: faYoutube, bg: "hover:bg-[#ff0000]", label: "YouTube" },
+  { href: "https://in.linkedin.com/in/connecting-dots-erp-043039171", icon: faLinkedinIn, bg: "hover:bg-[#0077b5]", label: "LinkedIn" },
+  { href: "https://www.instagram.com/connecting_dots_sap_training?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==", icon: faInstagram, bg: "hover:bg-[#c13584]", label: "Instagram" },
+];
+
 const Footer = () => {
   return (
-    <footer className="bg-[#182e4a] text-[#ecf0f1] font-sans w-full max-w-[1800px] mx-auto relative">
+    <footer className="bg-[#182e4a] text-[#ecf0f1] font-sans w-full max-w-[1800px] mx-auto">
       <div className="px-10 lg:px-24 flex flex-col">
-        {/* Top Section with Logo and Social Icons */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-2.5 border-b border-white/10 pb-2.5 gap-5 md:gap-0">
           <div className="w-[250px] h-auto">
             <Link href="/">
@@ -150,62 +128,36 @@ const Footer = () => {
             </Link>
           </div>
           <div className="flex gap-4">
-            <Link
-              href="https://www.facebook.com/sapinstallation.pune.9"
-              className="text-[#ecf0f1] text-lg w-9 h-9 flex items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-[#3b5998] hover:text-white"
-            >
-              <FontAwesomeIcon icon={faFacebookF} />
-            </Link>
-            <Link
-              href="https://wa.me/919004002941"
-              className="text-[#ecf0f1] text-lg w-9 h-9 flex items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-[#25d366] hover:text-white"
-            >
-              <FontAwesomeIcon icon={faWhatsapp} />
-            </Link>
-            <Link
-              href="https://youtube.com/@connectingdotserp?si=hSKEiEg3MdytdEe_"
-              className="text-[#ecf0f1] text-lg w-9 h-9 flex items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-[#ff0000] hover:text-white"
-            >
-              <FontAwesomeIcon icon={faYoutube} />
-            </Link>
-            <Link
-              href="https://in.linkedin.com/in/connecting-dots-erp-043039171"
-              className="text-[#ecf0f1] text-lg w-9 h-9 flex items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-[#0077b5] hover:text-white"
-            >
-              <FontAwesomeIcon icon={faLinkedinIn} />
-            </Link>
-            <Link
-              href="https://www.instagram.com/connecting_dots_sap_training?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-              className="text-[#ecf0f1] text-lg w-9 h-9 flex items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-[#c13584] hover:text-white"
-            >
-              <FontAwesomeIcon icon={faInstagram} />
-            </Link>
+            {socialLinks.map((social) => (
+              <Link
+                key={social.label}
+                href={social.href}
+                className={`text-[#ecf0f1] text-lg w-9 h-9 flex items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:-translate-y-1 ${social.bg} hover:text-white`}
+                aria-label={social.label}
+              >
+                <FontAwesomeIcon icon={social.icon} />
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-5">
-          {/* Column 1: SAP S/4 HANA COURSES */}
           <div className="lg:col-span-1">
             <FooterClient sections={[footerSections[0]]} />
           </div>
 
-          {/* Column 2: IT COURSES + ABOUT */}
           <div className="lg:col-span-1">
             <FooterClient sections={[footerSections[1], footerSections[2]]} />
           </div>
 
-          {/* Column 3: DIGITAL MARKETING + DATA SCIENCE */}
           <div className="lg:col-span-1">
             <FooterClient sections={[footerSections[3], footerSections[4]]} />
           </div>
 
-          {/* Column 4: DATA VISUALIZATION + HR COURSES */}
           <div className="lg:col-span-1">
             <FooterClient sections={[footerSections[5], footerSections[6]]} />
           </div>
 
-          {/* Column 5: CONTACT US */}
           <div className="lg:col-span-1">
             <div className="mb-2.5">
               <div className="bg-white/5 rounded px-4 py-2 h-full">
@@ -213,7 +165,6 @@ const Footer = () => {
                   CONTACT US
                 </h3>
                 <div className="flex flex-col gap-5">
-                  {/* Pune Office */}
                   <div className="pb-4 border-b border-dashed border-white/10">
                     <div className="flex items-start gap-2.5 mb-2.5">
                       <FontAwesomeIcon
@@ -225,45 +176,30 @@ const Footer = () => {
                           href="https://maps.app.goo.gl/DNwzKa2Yt1WB6zUB7"
                           target="_blank"
                           rel="noopener noreferrer"
-                          alt="Pune Office"
-                          className="text-base font-semibold text-[#3498db] m-0 mb-1.5 block text-decoration-none"
+                          className="text-base font-semibold text-[#3498db] m-0 mb-1.5 block"
                         >
                           Pune Office
                         </a>
                         <p className="m-0 text-sm leading-normal">
                           1st Floor, 101, Police, Wireless Colony, Vishal Nagar,
-                          Pimple Nilakh, Pune, Pimpri-Chinchwad, Maharashtra
-                          411027
+                          Pimple Nilakh, Pune, Pimpri-Chinchwad, Maharashtra 411027
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2.5 mb-2.5">
-                      <FontAwesomeIcon
-                        icon={faPhone}
-                        className="text-[#3498db] text-lg min-w-[18px]"
-                      />
-                      <a
-                        href="tel:+919004002941"
-                        className="text-[#ecf0f1] no-underline text-sm transition-colors hover:text-[#3498db]"
-                      >
+                      <FontAwesomeIcon icon={faPhone} className="text-[#3498db] text-lg min-w-[18px]" />
+                      <a href="tel:+919004002941" className="text-[#ecf0f1] no-underline text-sm transition-colors hover:text-[#3498db]">
                         +91 9004002941
                       </a>
                     </div>
                     <div className="flex items-center gap-2.5">
-                      <FontAwesomeIcon
-                        icon={faPhone}
-                        className="text-[#3498db] text-lg min-w-[18px]"
-                      />
-                      <a
-                        href="tel:+919004002958"
-                        className="text-[#ecf0f1] no-underline text-sm transition-colors hover:text-[#3498db]"
-                      >
+                      <FontAwesomeIcon icon={faPhone} className="text-[#3498db] text-lg min-w-[18px]" />
+                      <a href="tel:+919004002958" className="text-[#ecf0f1] no-underline text-sm transition-colors hover:text-[#3498db]">
                         +91 9004002958
                       </a>
                     </div>
                   </div>
 
-                  {/* Mumbai Office */}
                   <div className="pb-4 border-b border-dashed border-white/10 last:border-b-0">
                     <div className="flex items-start gap-2.5 mb-2.5">
                       <FontAwesomeIcon
@@ -275,27 +211,19 @@ const Footer = () => {
                           href="https://maps.app.goo.gl/i7W3baVVS1mDLmTJ9"
                           target="_blank"
                           rel="noopener noreferrer"
-                          alt="Mumbai Office"
-                          className="text-base font-semibold text-[#3498db] m-0 mb-1.5 block text-decoration-none"
+                          className="text-base font-semibold text-[#3498db] m-0 mb-1.5 block"
                         >
                           Mumbai Office
                         </a>
                         <p className="m-0 text-sm leading-normal">
-                          4th Floor, Ram Niwas, B-404, Gokhale Rd, near
-                          McDonald's, Dada Patil Wadi, Naupada, Thane West, Thane,
-                          Maharashtra 400602
+                          4th Floor, Ram Niwas, B-404, Gokhale Rd, near McDonald's,
+                          Dada Patil Wadi, Naupada, Thane West, Thane, Maharashtra 400602
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2.5">
-                      <FontAwesomeIcon
-                        icon={faPhone}
-                        className="text-[#3498db] text-lg min-w-[18px]"
-                      />
-                      <a
-                        href="tel:+919004005382"
-                        className="text-[#ecf0f1] no-underline text-sm transition-colors hover:text-[#3498db]"
-                      >
+                      <FontAwesomeIcon icon={faPhone} className="text-[#3498db] text-lg min-w-[18px]" />
+                      <a href="tel:+919004005382" className="text-[#ecf0f1] no-underline text-sm transition-colors hover:text-[#3498db]">
                         +91 9004005382
                       </a>
                     </div>
@@ -306,7 +234,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Footer Bottom */}
         <div className="mt-5 text-center pt-5 border-t border-white/10">
           <p className="m-0 text-xs text-[#95a5a6]">
             &copy; 2024 Connecting Dots ERP. All Rights Reserved.

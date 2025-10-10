@@ -8,6 +8,7 @@ const Loading = () => <div className="loading-placeholder">Loading...</div>;
 // Critical above-the-fold component - load immediately
 import HeaderCarousel from "@/components/HomePage/HeaderCarousel";
 import Chevron from "@/components/HomePage/Chevron";
+import Marquee2 from "@/components/HomePage/Marquee2";
 
 // Lazy load below-the-fold components with Suspense and fallback loaders
 
@@ -266,6 +267,7 @@ export default function HomePage() {
           Professional SAP & IT Training Institute
         </h1>
         <HeaderCarousel />
+        <Marquee2 />
         <Chevron />
 
           <Suspense fallback={<Loading />}>
