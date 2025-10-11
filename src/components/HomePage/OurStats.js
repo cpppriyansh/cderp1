@@ -1,5 +1,7 @@
 'use client'
+
 import React, { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { Trophy, GraduationCap, Target, Users, Code, Handshake } from 'lucide-react';
 import styles from '@/styles/HomePage/OurStats.module.css';
 
@@ -12,13 +14,24 @@ const AnimatedStatsSection = () => {
   const [inView, setInView] = useState(false);
   const [expandedTablet, setExpandedTablet] = useState({});
   const [expandedMobile, setExpandedMobile] = useState({});
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 0
-  );
-
+  const [isClient, setIsClient] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
   const pathRef = useRef(null);
   const containerRef = useRef(null);
   const frameRef = useRef(null);
+  
+  useEffect(() => {
+    // This effect only runs on the client side
+    setIsClient(true);
+    setWindowWidth(window.innerWidth);
+    
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const toggleExpandTablet = (idx) => {
     setExpandedTablet((prev) => ({ ...prev, [idx]: !prev[idx] }));
@@ -28,18 +41,12 @@ const AnimatedStatsSection = () => {
     setExpandedMobile((prev) => ({ ...prev, [idx]: !prev[idx] }));
   };
 
-  useEffect(() => {
-    const checkScreen = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    checkScreen();
-    window.addEventListener('resize', checkScreen);
-    return () => window.removeEventListener('resize', checkScreen);
-  }, []);
+  // Remove the duplicate resize handler since we already have one
 
-  const isMobile = windowWidth < 1024;
-  const isTablet = windowWidth >= 1024 && windowWidth <= 1200;
-  const disableAnimation = windowWidth >= 0 && windowWidth <= 1023;
+  // Only calculate these values on the client side
+  const isMobile = isClient ? windowWidth < 1024 : false;
+  const isTablet = isClient ? (windowWidth >= 1024 && windowWidth <= 1200) : false;
+  const disableAnimation = isClient ? (windowWidth >= 0 && windowWidth <= 1023) : false;
   const pathLength = 1500;
 
   useEffect(() => {

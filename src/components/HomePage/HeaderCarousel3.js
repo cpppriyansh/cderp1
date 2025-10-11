@@ -422,9 +422,9 @@ const CareerMentorsComponent = () => {
             <div className="text-center px-2 mt-8">
               <div className="relative inline-block">
                 <h1 className="text-2xl sm:text-3xl font-black leading-tight text-gray-800">
-                  <span className="text-white">Secure your </span>
-                  <span className="text-[#8dacbb]">Dream Career </span>
-                  <span className="text-white">with Live Classes</span>
+                  <span className="text-white">Professional</span>
+                  <span className="text-[#8dacbb]">SAP & IT</span>
+                  <span className="text-white">Training Institute</span>
                 </h1>
                 
                 <div className="absolute -left-2 sm:-left-4 top-0 bottom-0 w-0.5 sm:w-1 bg-gradient-to-b from-blue-500 via-indigo-500 to-purple-600 rounded-full">
@@ -455,9 +455,9 @@ const CareerMentorsComponent = () => {
             <div className="text-center px-4 py-6 flex-shrink-0">
               <div className="relative inline-block">
                 <h1 className="text-2xl md:text-4xl font-black leading-tight text-gray-800">
-                  <span className="text-white">Secure your </span>
-                  <span className="text-[#8dacbb]">Dream Career </span>
-                  <span className="text-white">with Live Classes</span>
+                  <span className="text-white">Professional </span>
+                  <span className="text-[#8dacbb]">SAP & IT </span>
+                  <span className="text-white">Training Institute</span>
                 </h1>
                 
                 <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 via-indigo-500 to-purple-600 rounded-full">
@@ -515,13 +515,13 @@ const CareerMentorsComponent = () => {
                 <div className="relative">
                   <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-tight">
                     <span className="block text-white mb-3 lg:mb-4">
-                      Secure your
+                    Professional
                     </span>
                     <span className="block text-[#93C5FD] bg-clip-text mb-3 lg:mb-4">
-                      Dream Career
+                    SAP & IT 
                     </span>
                     <span className="block text-white text-3xl lg:text-4xl xl:text-5xl">
-                      with Live Classes
+                    Training Institute
                     </span>
                   </h1>
                   
@@ -531,7 +531,7 @@ const CareerMentorsComponent = () => {
                 </div>
                 
                 <p className="text-lg lg:text-xl text-gray-100 leading-relaxed">
-                  From <span className="font-bold text-blue-600">Industry Experts</span>
+                No.1 Training & Placement Center
                 </p>
                 
                 <div className="mr-40 flex-shrink-0">
