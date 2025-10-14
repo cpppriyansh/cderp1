@@ -10,15 +10,22 @@ export function getQuizByTopic(topic) {
 }
 
 export function getAllQuizzes() {
-  return Object.entries(quizData).map(([key, quiz]) => ({
+  // Only process the quizzes object, not the entire quizData
+  const quizzes = quizData.quizzes || {};
+  
+  const result = Object.entries(quizzes).map(([key, quiz]) => ({
     id: quiz.id || key,
     title: quiz.title || key.charAt(0).toUpperCase() + key.slice(1),
     description: quiz.description || '',
     difficulty: quiz.difficulty || 'Medium',
     duration: quiz.duration || 0,
-    category: quiz.category || 'General',
+    // Determine category based on ID or title if not explicitly set
+    category: quiz.category || (key.startsWith('sap') || (quiz.title && quiz.title.toLowerCase().includes('sap')) ? 'sap' : 'non-sap'),
     icon: quiz.icon || '❓',
     questions: quiz.questions || [],
     questionCount: Array.isArray(quiz.questions) ? quiz.questions.length : 0
   }));
+
+  console.log('Processed quizzes:', result);
+  return result;
 }

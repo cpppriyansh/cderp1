@@ -1,13 +1,40 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { getAllQuizzes } from "@/utils/quizUtils";
 import QuizTopicCard from "@/components/quiz/QuizTopicCard";
-import { BookOpenIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
+import { BookOpenIcon, AcademicCapIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export default function QuizClientContent() {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const categories = [
+    { id: 'all', name: 'All Categories' },
+    { id: 'sap', name: 'SAP' },
+    { id: 'non-sap', name: 'Non-SAP' }
+  ];
+
+  const filteredQuizzes = useMemo(() => {
+    if (activeCategory === 'all') return quizzes;
+    
+    return quizzes.filter(quiz => {
+      // Check if quiz ID starts with 'sap-' or title contains 'SAP'
+      const isSapQuiz = quiz.id.startsWith('sap-') || 
+                       quiz.id === 'sap' ||
+                       (quiz.title && quiz.title.toLowerCase().includes('sap'));
+      
+      if (activeCategory === 'sap') {
+        return isSapQuiz;
+      } else if (activeCategory === 'non-sap') {
+        return !isSapQuiz;
+      }
+      
+      return true;
+    });
+  }, [quizzes, activeCategory]);
 
   useEffect(() => {
     // Load quizzes from the JSON file
@@ -31,7 +58,14 @@ export default function QuizClientContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 relative">
+      {/* Click outside to close dropdown */}
+      {isDropdownOpen && (
+        <div 
+          className="fixed inset-0 z-0"
+          onClick={() => setIsDropdownOpen(false)}
+        />
+      )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header Section */}
         <div className="text-center mb-12">
@@ -51,6 +85,39 @@ export default function QuizClientContent() {
             Test your knowledge and improve your skills with our interactive
             quizzes
           </p>
+        </div>
+
+        {/* Category Filter Dropdown */}
+        <div className="relative inline-block w-full md:w-64 mb-8">
+          <button
+            type="button"
+            className="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1B4168] focus:border-[#1B4168] flex justify-between items-center"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            aria-haspopup="listbox"
+            aria-expanded="true"
+          >
+            <span className="truncate">
+              {categories.find(cat => cat.id === activeCategory)?.name || 'Select Category'}
+            </span>
+            <ChevronDownIcon className={`h-5 w-5 text-gray-400 transition-transform ${isDropdownOpen ? 'transform rotate-180' : ''}`} />
+          </button>
+          
+          {isDropdownOpen && (
+            <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 ${activeCategory === category.id ? 'bg-blue-50 text-[#1B4168] font-medium' : 'text-gray-700'}`}
+                  onClick={() => {
+                    setActiveCategory(category.id);
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Stats Section */}
@@ -95,7 +162,7 @@ export default function QuizClientContent() {
 
         {/* Quiz Topics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {quizzes.map((quiz) => ({
+          {filteredQuizzes.map((quiz) => ({
             id: quiz.id,
             title: quiz.title,
             description: quiz.description,
